@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +95,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
@@ -110,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(Icons.comment, color: Colors.black),
                         SizedBox(width: 8),
@@ -131,7 +133,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       padding:
                           EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      child: Row(
+                      child: const Row(
                         children: [
                           Icon(Icons.favorite, color: Colors.white),
                           SizedBox(width: 4),
@@ -144,8 +146,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
-                Column(
+                const SizedBox(height: 16),
+                const Column(
                   children: [
                     Row(
                       children: [
@@ -198,8 +200,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
-                Align(
+                const SizedBox(height: 16),
+                const Align(
                   alignment: Alignment.bottomRight,
                   child: Text(
                     'See more >',
