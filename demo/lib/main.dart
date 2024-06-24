@@ -1,4 +1,5 @@
 import 'package:demo/auth/login.dart';
+import 'package:demo/auth/create_account.dart';
 import 'package:demo/screen/main_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: LoginScreen(),
+      home: CreateAccount(),
       debugShowCheckedModeBanner: false,
     );
   }
