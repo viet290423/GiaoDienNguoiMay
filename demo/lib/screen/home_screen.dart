@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'caption': 'Guess where I am??',
       'likes': 1200,
       'comments': 1200,
+      'isFavorite': false,
     },
     {
       'image': 'assets/images/anh1.jpg',
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'caption': 'Just chilling here!',
       'likes': 800,
       'comments': 500,
+      'isFavorite': false,
     },
     {
       'image': 'assets/images/anh1.jpg',
@@ -41,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'caption': 'Just chilling here!',
       'likes': 800,
       'comments': 500,
+      'isFavorite': false,
     },
   ];
 
@@ -72,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: filteredPosts.length,
                     itemBuilder: (context, index) {
                       final post = filteredPosts[index];
-                      return _buildPost(post);
+                      return _buildPost(post, index);
                     },
                   ),
                 ),
@@ -151,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildPost(Map<String, dynamic> post) {
+  Widget _buildPost(Map<String, dynamic> post, int index) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       width: double.infinity,
@@ -209,13 +212,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             GestureDetector(
               onDoubleTap: () {
                 setState(() {
-                  isFavorite = !isFavorite;
+                  posts[index]['isFavorite'] = !posts[index]['isFavorite'];
+                  posts[index]['likes'] += posts[index]['isFavorite'] ? 1 : -1;
                 });
               },
               child: Container(
@@ -250,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildLikeButton(post['likes']),
+                _buildLikeButton(index),
                 _buildCommentButton(post['comments']),
               ],
             ),
@@ -260,17 +262,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildLikeButton(int likes) {
+
+  Widget _buildLikeButton(int index) {
     return GestureDetector(
       onTap: () {
-        showModalBottomSheet(
-          context: context,
-          backgroundColor: Colors.transparent,
-          isScrollControlled: true,
-          builder: (BuildContext context) {
-            return LikeBottomSheet();
-          },
-        );
+        setState(() {
+          posts[index]['isFavorite'] = !posts[index]['isFavorite'];
+          posts[index]['likes'] += posts[index]['isFavorite'] ? 1 : -1;
+        });
       },
       child: Container(
         width: 150,
@@ -282,22 +281,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isFavorite = !isFavorite;
-                });
-              },
-              child: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: isFavorite ? Colors.red : Colors.white,
-              ),
+            Icon(
+              posts[index]['isFavorite'] ? Icons.favorite : Icons.favorite_border,
+              color: posts[index]['isFavorite'] ? Colors.red : Colors.white,
             ),
-            const SizedBox(
-              width: 5,
-            ),
+            const SizedBox(width: 5),
             Text(
-              '$likes',
+              '${posts[index]['likes']}',
               textAlign: TextAlign.right,
               style: const TextStyle(
                 color: Colors.white,
@@ -311,6 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
 
   Widget _buildCommentButton(int comments) {
     return GestureDetector(
