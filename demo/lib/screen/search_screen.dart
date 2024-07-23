@@ -1,4 +1,4 @@
-import 'package:demo/widgets/background_widget.dart';
+
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -7,7 +7,6 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const BackgroundWidget(flexTop: 1, flexBottom: 3),
           Padding(
             padding: const EdgeInsets.only(left: 36, top: 67, right: 36),
             child: Column(
@@ -50,7 +49,7 @@ class SearchScreen extends StatelessWidget {
                   child: Text(
                     'Search friend or number....',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 16,
                       fontFamily: 'Poppins',
                       fontWeight: FontWeight.w600,

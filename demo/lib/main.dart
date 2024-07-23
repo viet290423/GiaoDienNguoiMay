@@ -1,8 +1,7 @@
 import 'package:demo/auth/login.dart';
 import 'package:demo/auth/create_account.dart';
 import 'package:demo/screen/main_screen.dart';
-import 'package:demo/screen/test.dart';
-import 'package:demo/widgets/background_widget.dart';
+// import 'package:demo/screen/test.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: MainScreen(),
-      // home: BackGroundWidget(),
+      // home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

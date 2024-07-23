@@ -1,8 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:demo/screen/add_screen.dart';
-import 'package:demo/widgets/background_widget.dart';
 import 'package:demo/widgets/comment_widget.dart';
 import 'package:demo/widgets/like_widget.dart';
-import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,267 +10,346 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isFavorite = false;
+  String searchQuery = '';
+  TextEditingController searchController = TextEditingController();
+
+  // Danh sách bài đăng
+  final List<Map<String, dynamic>> posts = [
+    {
+      'image': 'assets/images/anh1.jpg',
+      'avatar': 'assets/images/flowers.png',
+      'name': 'Hoa',
+      'time': '2 min ago',
+      'caption': 'Guess where I am??',
+      'likes': 1200,
+      'comments': 1200,
+    },
+    {
+      'image': 'assets/images/anh1.jpg',
+      'avatar': 'assets/images/flowers.png',
+      'name': 'Minh Thu',
+      'time': '5 min ago',
+      'caption': 'Just chilling here!',
+      'likes': 800,
+      'comments': 500,
+    },
+    {
+      'image': 'assets/images/anh1.jpg',
+      'avatar': 'assets/images/flowers.png',
+      'name': 'Minh',
+      'time': '5 min ago',
+      'caption': 'Just chilling here!',
+      'likes': 800,
+      'comments': 500,
+    },
+  ];
+
+  List<Map<String, dynamic>> get filteredPosts {
+    if (searchQuery.isEmpty) {
+      return posts;
+    } else {
+      return posts
+          .where((post) => post['name']
+          .toLowerCase()
+          .contains(searchQuery.toLowerCase()))
+          .toList();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          const BackgroundWidget(
-            flexTop: 1,
-            flexBottom: 2,
-          ),
           Container(
-            margin: const EdgeInsets.only(top: 70, left: 30, right: 30),
+            margin: const EdgeInsets.only(top: 40, left: 10, right: 10),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(
-                      width: 236,
-                      height: 63,
-                      child: Text(
-                        'WELCOME BACK,\nUSERNAME',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w800,
-                          height: 0,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: const Color.fromARGB(
-                              255, 109, 152, 134), // Màu viền
-                          width: 5.0, // Độ dày viền
-                        ),
-                      ),
-                      child: const CircleAvatar(
-                        // radius: 20,
-                        backgroundImage:
-                            AssetImage("assets/images/flowers.png"),
-                      ),
-                    ),
-                  ],
+                _buildHeader(),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: filteredPosts.length,
+                    itemBuilder: (context, index) {
+                      final post = filteredPosts[index];
+                      return _buildPost(post);
+                    },
+                  ),
                 ),
-                const SizedBox(
-                  height: 35,
-                ),
-                Container(
-                    width: 382,
-                    height: 580,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0x19000000),
-                          blurRadius: 30,
-                          offset: Offset(12, 12),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 23, top: 45, right: 23),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onDoubleTap: () {
-                              setState(() {
-                                isFavorite = !isFavorite;
-                              });
-                            },
-                            child: Container(
-                              width: 322,
-                              height: 322,
-                              decoration: ShapeDecoration(
-                                image: const DecorationImage(
-                                  image: AssetImage("assets/images/anh1.jpg"),
-                                  fit: BoxFit.fill,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage:
-                                    AssetImage("assets/images/flowers.png"),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 200,
-                                    height: 28,
-                                    child: Text(
-                                      'Thảo Nguyên',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w700,
-                                        height: 0,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 100,
-                                    height: 18,
-                                    child: Text(
-                                      '2 min ago',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w400,
-                                        height: 0,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const SizedBox(
-                            width: 313,
-                            height: 30,
-                            child: Text(
-                              'Guess where I am??',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
-                                height: 0,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 60,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    backgroundColor: Colors.transparent,
-                                    isScrollControlled: true,
-                                    builder: (BuildContext context) {
-                                      return LikeBottomSheet();
-                                    },
-                                  );
-                                },
-                                child: Container(
-                                  width: 150,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            isFavorite = !isFavorite;
-                                          });
-                                        },
-                                        child: Icon(
-                                          isFavorite
-                                              ? Icons.favorite
-                                              : Icons.favorite_border,
-                                          color: isFavorite
-                                              ? Colors.red
-                                              : Colors.white,
-                                        ),
-                                      ),
-                                      const Text(
-                                        '1.2K',
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontFamily: 'Montserrat',
-                                          fontWeight: FontWeight.w400,
-                                          height: 0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  // showReactionAndComment(context, 1);
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    builder: (context) => CommentBottomSheet(),
-                                  );
-                                },
-                                child: Container(
-                                  width: 150,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.comment,
-                                        color: Colors.white,
-                                      ),
-                                      Text(
-                                        '1.2K',
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontFamily: 'Montserrat',
-                                          fontWeight: FontWeight.w400,
-                                          height: 0,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    )),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: SizedBox(
+            child: Text(
+              'FUZZY SNAP \nWELCOME BACK',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 22,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 300,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  controller: searchController,
+                  decoration: const InputDecoration(
+                    hintText: 'Search...',
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: InputBorder.none,
+                  ),
+                  onChanged: (value) {
+                    print('Searching for: $value');
+                  },
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.search, size: 30),
+                onPressed: () {
+                  setState(() {
+                    searchQuery = searchController.text;
+                  });
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPost(Map<String, dynamic> post) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x19000000),
+            blurRadius: 10,
+            offset: Offset(1, 1),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 23, top: 20, right: 23, bottom: 10),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: AssetImage(post['avatar']),
+                ),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      height: 28,
+                      child: Text(
+                        post['name'],
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 100,
+                      height: 18,
+                      child: Text(
+                        post['time'],
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onDoubleTap: () {
+                setState(() {
+                  isFavorite = !isFavorite;
+                });
+              },
+              child: Container(
+                width: double.infinity,
+                height: 330,
+                decoration: ShapeDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(post['image']),
+                    fit: BoxFit.fill,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 313,
+              height: 30,
+              child: Text(
+                post['caption'],
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildLikeButton(post['likes']),
+                _buildCommentButton(post['comments']),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLikeButton(int likes) {
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          backgroundColor: Colors.transparent,
+          isScrollControlled: true,
+          builder: (BuildContext context) {
+            return LikeBottomSheet();
+          },
+        );
+      },
+      child: Container(
+        width: 150,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isFavorite = !isFavorite;
+                });
+              },
+              child: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.red : Colors.white,
+              ),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
+              '$likes',
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCommentButton(int comments) {
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) => CommentBottomSheet(),
+        );
+      },
+      child: Container(
+        width: 150,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(30),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              Icons.comment,
+              color: Colors.white,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
+              '$comments',
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
