@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../auth/login.dart';
-import '../widgets/setting_widget.dart';
+import '../../auth/login.dart';
+import '../../widgets/setting_widget.dart';
 import 'account_screen.dart';
 
 class SettingScreen extends StatefulWidget {

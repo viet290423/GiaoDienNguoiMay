@@ -1,8 +1,8 @@
 import 'package:demo/app/dimensions.dart';
+import 'package:demo/screen/account/userposts_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:demo/app/dimensions.dart';
-import 'package:demo/screen/add_screen.dart';
+import 'package:demo/screen/add/add_screen.dart';
 import 'package:demo/widgets/comment_widget.dart';
 import 'package:demo/widgets/like_widget.dart';
 
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       return posts
           .where((post) =>
-              post['name'].toLowerCase().contains(searchQuery.toLowerCase()))
+          post['name'].toLowerCase().contains(searchQuery.toLowerCase()))
           .toList();
     }
   }
@@ -64,17 +64,47 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Padding(
+          padding: EdgeInsets.only(left: Dimensions.width30),
+          child: Text(
+            'FUZZYSNAP',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: Dimensions.font20,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: Dimensions.width30),
+            child: IconButton(
+                onPressed: () {
+                  showSearch(
+                      context: context,
+                      delegate: CustomSearch(posts: posts));
+                },
+                icon: Icon(
+                  Icons.search,
+                  size: Dimensions.iconSize24 + 6,
+                )),
+          ),
+        ],
+      ),
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           Container(
             margin: EdgeInsets.only(
-                top: Dimensions.height45,
+                // top: Dimensions.height45,
                 left: Dimensions.width10,
                 right: Dimensions.width10),
             child: Column(
               children: [
-                _buildHeader(),
+                // _buildHeader(),
                 SizedBox(height: Dimensions.height10),
                 Expanded(
                   child: PageView.builder(
@@ -94,79 +124,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHeader() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
-          child: const SizedBox(
-            child: Text(
-              'FUZZY SNAP',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 22,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: 300,
-                padding:
-                    EdgeInsets.symmetric(horizontal: Dimensions.width10 + 2),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(Dimensions.radius30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  controller: searchController,
-                  decoration: const InputDecoration(
-                    hintText: 'Search...',
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: InputBorder.none,
-                  ),
-                  onChanged: (value) {
-                    print('Searching for: $value');
-                  },
-                ),
-              ),
-              IconButton(
-                icon: Icon(Icons.search, size: Dimensions.iconSize24 + 6),
-                onPressed: () {
-                  setState(() {
-                    searchQuery = searchController.text;
-                  });
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildPost(Map<String, dynamic> post, int index) {
     return Container(
       margin: EdgeInsets.only(
           top: Dimensions.height30,
-          bottom: Dimensions.height30,
+          bottom: Dimensions.height45 + 20,
           left: Dimensions.width10,
           right: Dimensions.width10),
       width: double.infinity,
@@ -191,22 +153,26 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
+                  radius: Dimensions.radius20,
                   backgroundImage: AssetImage(post['avatar']),
                 ),
                 SizedBox(width: Dimensions.height10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
                       // width: 200,
                       height: Dimensions.height20,
                       child: Text(
                         post['name'],
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.black,
-                          fontSize: 18,
+                          fontSize: Dimensions.font16,
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                         ),
@@ -217,9 +183,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: Dimensions.height20,
                       child: Text(
                         post['time'],
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.black,
-                          fontSize: 12,
+                          fontSize: Dimensions.font12,
                           fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w400,
                         ),
@@ -229,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            SizedBox(height: Dimensions.height10),
+            SizedBox(height: Dimensions.height30),
             GestureDetector(
               onDoubleTap: () {
                 setState(() {
@@ -362,3 +328,88 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+class CustomSearch extends SearchDelegate {
+  final List<Map<String, dynamic>> posts;
+
+  CustomSearch({required this.posts});
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    final List<Map<String, dynamic>> filteredPosts = posts
+        .where((post) => post['name'].toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return ListView.builder(
+      itemCount: filteredPosts.length,
+      itemBuilder: (context, index) {
+        final post = filteredPosts[index];
+        return ListTile(
+          leading: CircleAvatar(
+            backgroundImage: AssetImage(post['avatar']),
+          ),
+          title: Text(post['name']),
+          onTap: () {
+            // Khi bấm vào tên của người đăng, hiển thị các bài đăng của họ
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserPostsScreen(
+                  userName: post['name'],
+                  posts: posts,
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final List<Map<String, dynamic>> filteredPosts = posts
+        .where((post) => post['name'].toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    return ListView.builder(
+      itemCount: filteredPosts.length,
+      itemBuilder: (context, index) {
+        final post = filteredPosts[index];
+        return ListTile(
+          leading: CircleAvatar(
+            backgroundImage: AssetImage(post['avatar']),
+          ),
+          title: Text(post['name']),
+          onTap: () {
+            query = post['name'];
+            showResults(context);
+          },
+        );
+      },
+    );
+  }
+}
+

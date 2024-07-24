@@ -1,5 +1,5 @@
-import 'package:demo/screen/hienthi.dart';
-import 'package:demo/screen/home_screen.dart';
+import 'package:demo/screen/add/hienthi.dart';
+import 'package:demo/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';

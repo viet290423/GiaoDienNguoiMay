@@ -1,5 +1,5 @@
 import 'package:demo/app/dimensions.dart';
-import 'package:demo/screen/setting_screen.dart';
+import 'package:demo/screen/account/setting_screen.dart';
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -52,7 +52,7 @@ class AccountScreen extends StatelessWidget {
                     backgroundImage: AssetImage('assets/images/flowers.png'),
                   ),
                   Text(
-                    'TML VIET',
+                    'USER NAME',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,

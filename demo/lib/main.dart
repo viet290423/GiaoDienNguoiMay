@@ -1,6 +1,6 @@
 import 'package:demo/auth/login.dart';
 import 'package:demo/auth/create_account.dart';
-import 'package:demo/screen/main_screen.dart';
+import 'package:demo/screen/home/main_screen.dart';
 // import 'package:demo/screen/test.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';

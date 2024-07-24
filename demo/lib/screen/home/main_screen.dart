@@ -1,8 +1,8 @@
-import 'package:demo/screen/account_screen.dart';
-import 'package:demo/screen/add_screen.dart';
-import 'package:demo/screen/chat_screen.dart';
-import 'package:demo/screen/home_screen.dart';
-import 'package:demo/screen/notification_screen.dart';
+import 'package:demo/screen/account/account_screen.dart';
+import 'package:demo/screen/add/add_screen.dart';
+import 'package:demo/screen/chat/chat_screen.dart';
+import 'package:demo/screen/home/home_screen.dart';
+import 'package:demo/screen/notification/notification_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
