@@ -1,7 +1,6 @@
-import 'package:demo/screen/main_screen.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class CreateAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -27,7 +26,7 @@ class LoginScreen extends StatelessWidget {
                       children: <Widget>[
                         SizedBox(height: 50), // Add some space at the top
                         Text(
-                          'LOGIN',
+                          'Create Account',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 28,
@@ -37,15 +36,14 @@ class LoginScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 25),
                         Text(
-                          'Welcome back you\'ve\nbeen missed!',
+                          'Create an account so you can explore all the existing jobs',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 15,
                             color: Colors.black,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 70),
+                        SizedBox(height: 30),
                         TextField(
                           decoration: InputDecoration(
                             hintText: 'Phone number',
@@ -114,26 +112,45 @@ class LoginScreen extends StatelessWidget {
                             contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
                           ),
                         ),
-                        SizedBox(height: 15),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {
-                              // Handle forgot password
-                            },
-                            child: Text(
-                              'Forgot your password?',
-                              style: TextStyle(
-                                color: Color(0xFF6D9886),
+                        SizedBox(height: 25),
+                        TextField(
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: 'Confirm Password',
+                            hintStyle: TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                            ),
+                            filled: true,
+                            fillColor: Color(0xFFF2E7D5),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 2.0,
                               ),
                             ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 2.0,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide(
+                                color: Colors.black,
+                                width: 2.0,
+                              ),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        SizedBox(height: 35),
                         ElevatedButton(
                           onPressed: () {
                             // Handle sign in
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
@@ -144,7 +161,7 @@ class LoginScreen extends StatelessWidget {
                             minimumSize: Size(double.infinity, 56),
                           ),
                           child: Text(
-                            'Sign in',
+                            'Sign up',
                             style: TextStyle(
                                 fontSize: 16,
                                 color:
@@ -158,7 +175,7 @@ class LoginScreen extends StatelessWidget {
                               // Handle create new account
                             },
                             child: Text(
-                              'Create new account',
+                              'Already have an account',
                               style: TextStyle(color: Colors.black),
                             ),
                           ),

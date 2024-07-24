@@ -1,7 +1,6 @@
-import 'package:demo/screen/main_screen.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class ForgotPasswork extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -25,7 +24,7 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        SizedBox(height: 50), // Add some space at the top
+                        SizedBox(height: 50),
                         Text(
                           'LOGIN',
                           textAlign: TextAlign.center,
@@ -119,7 +118,7 @@ class LoginScreen extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                              // Handle forgot password
+                              
                             },
                             child: Text(
                               'Forgot your password?',
@@ -132,8 +131,7 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(height: 25),
                         ElevatedButton(
                           onPressed: () {
-                            // Handle sign in
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                           
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
@@ -155,7 +153,7 @@ class LoginScreen extends StatelessWidget {
                         Center(
                           child: TextButton(
                             onPressed: () {
-                              // Handle create new account
+                              
                             },
                             child: Text(
                               'Create new account',
@@ -179,27 +177,27 @@ class LoginScreen extends StatelessWidget {
                             SocialMediaButton(
                               imagePath: 'assets/images/google.png',
                               onTap: () {
-                                // Handle Google sign in
+                               
                               },
                             ),
-                            SizedBox(width: 16), // Space between buttons
+                            SizedBox(width: 16), 
                             SocialMediaButton(
                               imagePath: 'assets/images/facebook.png',
                               onTap: () {
-                                // Handle Facebook sign in
+                                
                               },
                             ),
-                            SizedBox(width: 16), // Space between buttons
+                            SizedBox(width: 16), 
                             SocialMediaButton(
                               imagePath: 'assets/images/apple.png',
                               onTap: () {
-                                // Handle Apple sign in
+                                
                               },
                             ),
                           ],
                         ),
-                        Spacer(), // Fill remaining space
-                        SizedBox(height: 30), // Add some space at the bottom
+                        Spacer(), 
+                        SizedBox(height: 30),
                       ],
                     ),
                   ),
@@ -224,8 +222,8 @@ class SocialMediaButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 60, // Adjust width as needed
-        height: 44, // Adjust height as needed
+        width: 60, 
+        height: 44,
         decoration: BoxDecoration(
           color: Color(0xFFEFEFEF),
           borderRadius: BorderRadius.circular(12),
@@ -233,8 +231,8 @@ class SocialMediaButton extends StatelessWidget {
         child: Center(
           child: Image.asset(
             imagePath,
-            width: 24, // Adjust icon size as needed
-            height: 24, // Adjust icon size as needed
+            width: 24,
+            height: 24,
           ),
         ),
       ),
