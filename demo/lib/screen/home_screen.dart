@@ -1,3 +1,4 @@
+import 'package:demo/app/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/screen/add_screen.dart';
 import 'package:demo/widgets/comment_widget.dart';
@@ -62,14 +63,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 40, left: 10, right: 10),
+            margin: EdgeInsets.only(top: Dimensions.height45, left: Dimensions.width10, right: Dimensions.width10),
             child: Column(
               children: [
                 _buildHeader(),
-                const SizedBox(height: 10),
+                SizedBox(height: Dimensions.height10),
                 Expanded(
                   child: ListView.builder(
                     itemCount: filteredPosts.length,
@@ -92,9 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: SizedBox(
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
+          child: const SizedBox(
             child: Text(
               'FUZZY SNAP \nWELCOME BACK',
               style: TextStyle(
@@ -108,16 +110,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SizedBox(height: 10),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 width: 300,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: EdgeInsets.symmetric(horizontal: Dimensions.width10 + 2),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(Dimensions.radius30),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
@@ -156,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildPost(Map<String, dynamic> post, int index) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: EdgeInsets.only(bottom: Dimensions.height20, left: Dimensions.width10, right: Dimensions.width10),
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -164,8 +166,9 @@ class _HomeScreenState extends State<HomeScreen> {
         boxShadow: const [
           BoxShadow(
             color: Color(0x19000000),
-            blurRadius: 10,
-            offset: Offset(1, 1),
+            spreadRadius: 3,
+            blurRadius: 4,
+            offset: Offset(0, 3),
           ),
         ],
       ),

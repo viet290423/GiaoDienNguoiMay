@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 
-class SearchScreen extends StatelessWidget {
+class NotificationScreen extends StatelessWidget {
+  const NotificationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

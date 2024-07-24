@@ -2,13 +2,13 @@ import 'package:demo/screen/account_screen.dart';
 import 'package:demo/screen/add_screen.dart';
 import 'package:demo/screen/chat_screen.dart';
 import 'package:demo/screen/home_screen.dart';
-import 'package:demo/screen/search_screen.dart';
+import 'package:demo/screen/notification_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -18,7 +18,7 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
   final screens = [
     HomeScreen(),
-    SearchScreen(),
+    NotificationScreen(),
     AddScreen(),
     ChatScreen(),
     AccountScreen()
@@ -26,6 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: IndexedStack(
         index: _currentIndex,
         children: screens,

@@ -1,3 +1,4 @@
+import 'package:demo/screen/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'account_screen.dart';
 
@@ -11,10 +12,7 @@ class SettingScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => AccountScreen()),
-            );
+            Navigator.pop(context);
           },
         ),
         title: Text(
@@ -41,12 +39,12 @@ class SettingScreen extends StatelessWidget {
                 buildSettingItem('Language', trailing: Text('English'), onTap: () {}),
                 buildSettingItem(
                   'Dark Mode',
-                  trailing: Switch(value: true, onChanged: (bool value) {}),
+                  trailing: Switch(value: false, onChanged: (bool value) {}),
                   onTap: () {},
                 ),
                 buildSettingItem(
                   'Notification',
-                  trailing: Switch(value: true, onChanged: (bool value) {}),
+                  trailing: Switch(value: false, onChanged: (bool value) {}),
                   onTap: () {},
                 ),
               ],
