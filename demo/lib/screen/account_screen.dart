@@ -1,3 +1,4 @@
+import 'package:demo/app/dimensions.dart';
 import 'package:demo/screen/setting_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +38,7 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(
           children: [
@@ -71,7 +73,7 @@ class AccountScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(Dimensions.height10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

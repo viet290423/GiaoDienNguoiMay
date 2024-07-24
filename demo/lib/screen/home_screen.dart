@@ -1,4 +1,5 @@
 import 'package:demo/app/dimensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/screen/add_screen.dart';
 import 'package:demo/widgets/comment_widget.dart';
@@ -73,7 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildHeader(),
                 SizedBox(height: Dimensions.height10),
                 Expanded(
-                  child: ListView.builder(
+                  child: PageView.builder(
+                    scrollDirection: Axis.vertical,
                     itemCount: filteredPosts.length,
                     itemBuilder: (context, index) {
                       final post = filteredPosts[index];
@@ -98,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
           child: const SizedBox(
             child: Text(
-              'FUZZY SNAP \nWELCOME BACK',
+              'FUZZY SNAP ',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 22,
@@ -142,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.search, size: 30),
+                icon: Icon(Icons.search, size: Dimensions.iconSize24 + 6),
                 onPressed: () {
                   setState(() {
                     searchQuery = searchController.text;
@@ -158,10 +160,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildPost(Map<String, dynamic> post, int index) {
     return Container(
-      margin: EdgeInsets.only(bottom: Dimensions.height20, left: Dimensions.width10, right: Dimensions.width10),
+      margin: EdgeInsets.only(top: Dimensions.height30,bottom: Dimensions.height30, left: Dimensions.width10, right: Dimensions.width10),
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(Dimensions.radius30),
         color: Colors.white,
         boxShadow: const [
           BoxShadow(
@@ -173,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 23, top: 20, right: 23, bottom: 10),
+        padding: EdgeInsets.only(left: Dimensions.width20, top: Dimensions.height20, right: Dimensions.width20, bottom: Dimensions.height10),
         child: Column(
           children: [
             Row(
@@ -181,13 +183,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 CircleAvatar(
                   backgroundImage: AssetImage(post['avatar']),
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: Dimensions.height10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 200,
-                      height: 28,
+                      // width: 200,
+                      height: Dimensions.height20,
                       child: Text(
                         post['name'],
                         style: const TextStyle(
@@ -199,8 +201,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     SizedBox(
-                      width: 100,
-                      height: 18,
+                      // width: 100,
+                      height: Dimensions.height20,
                       child: Text(
                         post['time'],
                         style: const TextStyle(
@@ -215,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: Dimensions.height10),
             GestureDetector(
               onDoubleTap: () {
                 setState(() {
@@ -225,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: Container(
                 width: double.infinity,
-                height: 330,
+                height: Dimensions.popularImgSize,
                 decoration: ShapeDecoration(
                   image: DecorationImage(
                     image: AssetImage(post['image']),
@@ -277,24 +279,24 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         width: 150,
         height: 40,
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(30),
-        ),
+        // decoration: BoxDecoration(
+        //   color: Colors.black,
+        //   borderRadius: BorderRadius.circular(30),
+        // ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               posts[index]['isFavorite'] ? Icons.favorite : Icons.favorite_border,
-              color: posts[index]['isFavorite'] ? Colors.red : Colors.white,
+              color: posts[index]['isFavorite'] ? Colors.red : Colors.black,
             ),
-            const SizedBox(width: 5),
+            SizedBox(width: Dimensions.width10/2),
             Text(
               '${posts[index]['likes']}',
               textAlign: TextAlign.right,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: Dimensions.font16,
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w400,
               ),
@@ -318,26 +320,26 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         width: 150,
         height: 40,
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(30),
-        ),
+        // decoration: BoxDecoration(
+        //   color: Colors.black,
+        //   borderRadius: BorderRadius.circular(30),
+        // ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
-              Icons.comment,
-              color: Colors.white,
+              CupertinoIcons.chat_bubble,
+              color: Colors.black,
             ),
-            const SizedBox(
-              width: 5,
+            SizedBox(
+              width: Dimensions.width10/2,
             ),
             Text(
               '$comments',
               textAlign: TextAlign.right,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: Dimensions.font16,
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w400,
               ),
