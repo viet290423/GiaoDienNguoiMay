@@ -50,7 +50,7 @@ class AccountScreen extends StatelessWidget {
                     backgroundImage: AssetImage('assets/images/flowers.png'),
                   ),
                   Text(
-                    'USER NAME',
+                    'TML VIET',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class AccountScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

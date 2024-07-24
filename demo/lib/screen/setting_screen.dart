@@ -1,8 +1,17 @@
-import 'package:demo/screen/main_screen.dart';
 import 'package:flutter/material.dart';
+import '../auth/login.dart';
+import '../widgets/setting_widget.dart';
 import 'account_screen.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
+  @override
+  _SettingScreenState createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
+  bool isDarkMode = false;
+  bool isNotification = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +30,7 @@ class SettingScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(  // Thêm SingleChildScrollView để có thể cuộn
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -39,12 +48,26 @@ class SettingScreen extends StatelessWidget {
                 buildSettingItem('Language', trailing: Text('English'), onTap: () {}),
                 buildSettingItem(
                   'Dark Mode',
-                  trailing: Switch(value: false, onChanged: (bool value) {}),
+                  trailing: Switch(
+                    value: isDarkMode,
+                    onChanged: (bool value) {
+                      setState(() {
+                        isDarkMode = value;
+                      });
+                    },
+                  ),
                   onTap: () {},
                 ),
                 buildSettingItem(
                   'Notification',
-                  trailing: Switch(value: false, onChanged: (bool value) {}),
+                  trailing: Switch(
+                    value: isNotification,
+                    onChanged: (bool value) {
+                      setState(() {
+                        isNotification = value;
+                      });
+                    },
+                  ),
                   onTap: () {},
                 ),
               ],
@@ -61,11 +84,18 @@ class SettingScreen extends StatelessWidget {
             buildSettingSection(
               title: 'Red Zone',
               children: [
-                buildSettingItem('Log out', trailing: Icon(Icons.logout), onTap: () {}),
+                buildSettingItem('Log out', trailing: Icon(Icons.logout), onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                }),
                 buildSettingItem(
                   'Delete account',
                   textColor: Colors.red,
-                  onTap: () {},
+                  onTap: () {
+                    showDeleteAccountDialog(context);
+                  },
                 ),
               ],
             ),
@@ -75,51 +105,62 @@ class SettingScreen extends StatelessWidget {
     );
   }
 
-  Widget buildSettingSection({required String title, required List<Widget> children}) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 7,
-            offset: Offset(0, 3),
+  void showDeleteAccountDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 10),
-          ...children,
-        ],
-      ),
-    );
-  }
-
-  Widget buildSettingItem(String text, {Widget? trailing, Color textColor = Colors.black, required VoidCallback onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              text,
-              style: TextStyle(fontSize: 18, color: textColor),
+          title: Center(
+            child: Text(
+              'Do you really want to delete your account?',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
-            if (trailing != null) trailing,
+          ),
+          actions: <Widget>[
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      'No',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      // Handle account deletion
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      'Yes',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 }

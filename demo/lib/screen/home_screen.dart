@@ -1,8 +1,9 @@
-import 'package:demo/app/dimensions.dart';
 import 'package:flutter/material.dart';
+import 'package:demo/app/dimensions.dart';
 import 'package:demo/screen/add_screen.dart';
 import 'package:demo/widgets/comment_widget.dart';
 import 'package:demo/widgets/like_widget.dart';
+
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -73,7 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildHeader(),
                 SizedBox(height: Dimensions.height10),
                 Expanded(
-                  child: ListView.builder(
+                  child: PageView.builder(
+                    scrollDirection: Axis.vertical,
                     itemCount: filteredPosts.length,
                     itemBuilder: (context, index) {
                       final post = filteredPosts[index];
@@ -98,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.symmetric(horizontal: Dimensions.width20),
           child: const SizedBox(
             child: Text(
-              'FUZZY SNAP \nWELCOME BACK',
+              'FUZZY SNAP',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 22,
@@ -265,7 +267,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   Widget _buildLikeButton(int index) {
     return GestureDetector(
       onTap: () {
@@ -304,7 +305,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 
   Widget _buildCommentButton(int comments) {
     return GestureDetector(
