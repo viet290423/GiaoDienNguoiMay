@@ -1,5 +1,6 @@
-
+import 'package:demo/app/dimensions.dart';
 import 'package:flutter/material.dart';
+import 'package:demo/widgets/app_bar_widget.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -7,60 +8,92 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar:
+          const AppBarWidget(icon: Icons.notifications, title: "Notification"),
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 36, top: 67, right: 36),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 380,
-                  height: 52,
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: const Offset(0, 3),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Divider(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  'Request',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/flowers.png'),
+                  radius: 20,
+                ),
+                title: const Text('Lucas had sent you a Friend Request'),
+                subtitle: Padding(
+                  padding: EdgeInsets.only(top: Dimensions.height10),
+                  child: Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.width20 * 2),
+                          foregroundColor: Colors.black,
+                          backgroundColor: Colors.white,
+                          side: const BorderSide(color: Colors.black),
+                        ),
+                        child: Text(
+                          'Confirm',
+                          style: TextStyle(fontSize: Dimensions.font20),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.width20 * 2),
+                          backgroundColor: Colors.black,
+                          foregroundColor: Colors.white,
+                        ),
+                        child: const Text('Decline'),
                       ),
                     ],
                   ),
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Search',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.search, color: Colors.grey),
-                    ),
-                    onChanged: (value) {
-                      print('Searching for: $value');
-                    },
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  'Post',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+              ),
+              const ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/flowers.png'),
+                  radius: 20,
                 ),
-                const SizedBox(
-                  width: 331,
-                  height: 35,
-                  child: Text(
-                    'Search friend or number....',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      height: 0,
-                    ),
-                  ),
+                title: Text('Phúc has post a new post'),
+                subtitle: Text('10p'),
+              ),
+              const Divider(),
+              const ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/flowers.png'),
+                  radius: 20,
                 ),
-              ],
-            ),
+                title: Text('Phúc has comment your post'),
+                subtitle: Text('10p'),
+              ),
+            ],
           ),
         ],
       ),
