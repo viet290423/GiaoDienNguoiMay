@@ -74,7 +74,8 @@ class CreateAccount extends StatelessWidget {
                                 width: 2.0,
                               ),
                             ),
-                            contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 18.0, horizontal: 16.0),
                           ),
                         ),
                         SizedBox(height: 25),
@@ -109,7 +110,8 @@ class CreateAccount extends StatelessWidget {
                                 width: 2.0,
                               ),
                             ),
-                            contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 18.0, horizontal: 16.0),
                           ),
                         ),
                         SizedBox(height: 25),
@@ -144,7 +146,8 @@ class CreateAccount extends StatelessWidget {
                                 width: 2.0,
                               ),
                             ),
-                            contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 18.0, horizontal: 16.0),
                           ),
                         ),
                         SizedBox(height: 35),
