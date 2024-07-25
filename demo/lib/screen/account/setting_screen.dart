@@ -1,5 +1,5 @@
+import 'package:demo/screen/auth/login_screen.dart';
 import 'package:flutter/material.dart';
-import '../../auth/login.dart';
 import '../../widgets/setting_widget.dart';
 import 'account_screen.dart';
 
@@ -19,12 +19,12 @@ class _SettingScreenState extends State<SettingScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'SETTING',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
@@ -41,11 +41,11 @@ class _SettingScreenState extends State<SettingScreen> {
                 buildSettingItem('Change Password', onTap: () {}),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildSettingSection(
               title: 'General',
               children: [
-                buildSettingItem('Language', trailing: Text('English'), onTap: () {}),
+                buildSettingItem('Language', trailing: const Text('English'), onTap: () {}),
                 buildSettingItem(
                   'Dark Mode',
                   trailing: Switch(
@@ -72,7 +72,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildSettingSection(
               title: 'About us',
               children: [
@@ -80,11 +80,11 @@ class _SettingScreenState extends State<SettingScreen> {
                 buildSettingItem('Help', onTap: () {}),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             buildSettingSection(
               title: 'Red Zone',
               children: [
-                buildSettingItem('Log out', trailing: Icon(Icons.logout), onTap: () {
+                buildSettingItem('Log out', trailing: const Icon(Icons.logout), onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -113,7 +113,7 @@ class _SettingScreenState extends State<SettingScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          title: Center(
+          title: const Center(
             child: Text(
               'Do you really want to delete your account?',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -135,7 +135,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'No',
                       style: TextStyle(color: Colors.white),
                     ),
@@ -150,7 +150,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Yes',
                       style: TextStyle(color: Colors.white),
                     ),

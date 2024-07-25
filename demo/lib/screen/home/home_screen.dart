@@ -1,5 +1,6 @@
 import 'package:demo/app/dimensions.dart';
 import 'package:demo/screen/account/userposts_screen.dart';
+import 'package:demo/screen/home/comment_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/screen/add/add_screen.dart';
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       'image': 'assets/images/anh1.jpg',
       'avatar': 'assets/images/flowers.png',
-      'name': 'Minh Thu',
+      'name': 'Minh',
       'time': '5 min ago',
       'caption': 'Just chilling here!',
       'likes': 800,
@@ -56,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       return posts
           .where((post) =>
-          post['name'].toLowerCase().contains(searchQuery.toLowerCase()))
+              post['name'].toLowerCase().contains(searchQuery.toLowerCase()))
           .toList();
     }
   }
@@ -84,8 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: IconButton(
                 onPressed: () {
                   showSearch(
-                      context: context,
-                      delegate: CustomSearch(posts: posts));
+                      context: context, delegate: CustomSearch(posts: posts));
                 },
                 icon: Icon(
                   Icons.search,
@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       margin: EdgeInsets.only(
           top: Dimensions.height30,
-          bottom: Dimensions.height45 + 20,
+          bottom: Dimensions.height45,
           left: Dimensions.width10,
           right: Dimensions.width10),
       width: double.infinity,
@@ -289,11 +289,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildCommentButton(int comments) {
     return GestureDetector(
       onTap: () {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (context) => CommentBottomSheet(),
-        );
+        // showModalBottomSheet(
+        //   context: context,
+        //   isScrollControlled: true,
+        //   builder: (context) => CommentBottomSheet(),
+        // );
+        Navigator.push(context, MaterialPageRoute(builder: (context) => CommentScreen()));
       },
       child: Container(
         width: 150,
@@ -359,7 +360,8 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     final List<Map<String, dynamic>> filteredPosts = posts
-        .where((post) => post['name'].toLowerCase().contains(query.toLowerCase()))
+        .where(
+            (post) => post['name'].toLowerCase().contains(query.toLowerCase()))
         .toList();
 
     return ListView.builder(
@@ -391,7 +393,8 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final List<Map<String, dynamic>> filteredPosts = posts
-        .where((post) => post['name'].toLowerCase().contains(query.toLowerCase()))
+        .where(
+            (post) => post['name'].toLowerCase().contains(query.toLowerCase()))
         .toList();
 
     return ListView.builder(
@@ -404,12 +407,19 @@ class CustomSearch extends SearchDelegate {
           ),
           title: Text(post['name']),
           onTap: () {
-            query = post['name'];
-            showResults(context);
+            // Điều hướng trực tiếp đến UserPostsScreen khi bấm vào gợi ý
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserPostsScreen(
+                  userName: post['name'],
+                  posts: posts,
+                ),
+              ),
+            );
           },
         );
       },
     );
   }
 }
-

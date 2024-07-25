@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ForgotPasswork extends StatelessWidget {
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final double screenHeight = MediaQuery.of(context).size.height;
-    final double screenWidth = MediaQuery.of(context).size.width;
+    // final double screenHeight = MediaQuery.of(context).size.height;
+    // final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: LayoutBuilder(
@@ -18,15 +20,15 @@ class ForgotPasswork extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: DefaultTextStyle(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontFamily: 'Montserrat',
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        SizedBox(height: 50),
-                        Text(
-                          'LOGIN',
+                        const SizedBox(height: 50), // Add some space at the top
+                        const Text(
+                          'Create Account',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 28,
@@ -34,135 +36,154 @@ class ForgotPasswork extends StatelessWidget {
                             color: Color(0xFF6D9886),
                           ),
                         ),
-                        SizedBox(height: 25),
-                        Text(
-                          'Welcome back you\'ve\nbeen missed!',
+                        const SizedBox(height: 25),
+                        const Text(
+                          'Create an account so you can explore all the existing jobs',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 15,
                             color: Colors.black,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 70),
+                        const SizedBox(height: 30),
                         TextField(
                           decoration: InputDecoration(
                             hintText: 'Phone number',
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                               fontFamily: 'Montserrat',
-                              color: const Color.fromARGB(255, 0, 0, 0),
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
                             filled: true,
-                            fillColor: Color(0xFFF2E7D5),
+                            fillColor: const Color(0xFFF2E7D5),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.black,
                                 width: 2.0,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.black,
                                 width: 2.0,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.black,
                                 width: 2.0,
                               ),
                             ),
-                            contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         TextField(
                           obscureText: true,
                           decoration: InputDecoration(
                             hintText: 'Password',
-                            hintStyle: TextStyle(
+                            hintStyle: const TextStyle(
                               fontFamily: 'Montserrat',
-                              color: const Color.fromARGB(255, 0, 0, 0),
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
                             filled: true,
-                            fillColor: Color(0xFFF2E7D5),
+                            fillColor: const Color(0xFFF2E7D5),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.black,
                                 width: 2.0,
                               ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.black,
                                 width: 2.0,
                               ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 color: Colors.black,
                                 width: 2.0,
                               ),
                             ),
-                            contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
                           ),
                         ),
-                        SizedBox(height: 15),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {
-                              
-                            },
-                            child: Text(
-                              'Forgot your password?',
-                              style: TextStyle(
-                                color: Color(0xFF6D9886),
+                        const SizedBox(height: 25),
+                        TextField(
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: 'Confirm Password',
+                            hintStyle: const TextStyle(
+                              fontFamily: 'Montserrat',
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                            filled: true,
+                            fillColor: const Color(0xFFF2E7D5),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: const BorderSide(
+                                color: Colors.black,
+                                width: 2.0,
                               ),
                             ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: const BorderSide(
+                                color: Colors.black,
+                                width: 2.0,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: const BorderSide(
+                                color: Colors.black,
+                                width: 2.0,
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 35),
                         ElevatedButton(
                           onPressed: () {
-                           
+                            // Handle sign in
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black,
-                            padding: EdgeInsets.symmetric(vertical: 16),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            minimumSize: Size(double.infinity, 56),
+                            minimumSize: const Size(double.infinity, 56),
                           ),
-                          child: Text(
-                            'Sign in',
+                          child: const Text(
+                            'Sign up',
                             style: TextStyle(
                                 fontSize: 16,
                                 color:
-                                    const Color.fromARGB(255, 255, 255, 255)),
+                                    Color.fromARGB(255, 255, 255, 255)),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Center(
                           child: TextButton(
                             onPressed: () {
-                              
+                              // Handle create new account
                             },
-                            child: Text(
-                              'Create new account',
+                            child: const Text(
+                              'Already have an account',
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
-                        SizedBox(height: 60),
-                        Center(
+                        const SizedBox(height: 60),
+                        const Center(
                           child: Text(
                             'Or continue with',
                             style: TextStyle(
@@ -170,34 +191,34 @@ class ForgotPasswork extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SocialMediaButton(
                               imagePath: 'assets/images/google.png',
                               onTap: () {
-                               
+                                // Handle Google sign in
                               },
                             ),
-                            SizedBox(width: 16), 
+                            const SizedBox(width: 16), // Space between buttons
                             SocialMediaButton(
                               imagePath: 'assets/images/facebook.png',
                               onTap: () {
-                                
+                                // Handle Facebook sign in
                               },
                             ),
-                            SizedBox(width: 16), 
+                            const SizedBox(width: 16), // Space between buttons
                             SocialMediaButton(
                               imagePath: 'assets/images/apple.png',
                               onTap: () {
-                                
+                                // Handle Apple sign in
                               },
                             ),
                           ],
                         ),
-                        Spacer(), 
-                        SizedBox(height: 30),
+                        const Spacer(), // Fill remaining space
+                        const SizedBox(height: 30), // Add some space at the bottom
                       ],
                     ),
                   ),
@@ -222,17 +243,17 @@ class SocialMediaButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 60, 
-        height: 44,
+        width: 60, // Adjust width as needed
+        height: 44, // Adjust height as needed
         decoration: BoxDecoration(
-          color: Color(0xFFEFEFEF),
+          color: const Color(0xFFEFEFEF),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
           child: Image.asset(
             imagePath,
-            width: 24,
-            height: 24,
+            width: 24, // Adjust icon size as needed
+            height: 24, // Adjust icon size as needed
           ),
         ),
       ),
