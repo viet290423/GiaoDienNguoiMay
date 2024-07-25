@@ -1,9 +1,8 @@
-import 'package:demo/auth/login.dart';
-import 'package:demo/auth/create_account.dart';
-import 'package:demo/screen/main_screen.dart';
-import 'package:demo/screen/test.dart';
-import 'package:demo/widgets/background_widget.dart';
+import 'package:demo/screen/auth/login_screen.dart';
+import 'package:demo/screen/home/main_screen.dart';
+// import 'package:demo/screen/test.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,10 +14,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
-      home: MainScreen(),
-      // home: BackGroundWidget(),
+      // home: MainScreen(),
+      home: LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
