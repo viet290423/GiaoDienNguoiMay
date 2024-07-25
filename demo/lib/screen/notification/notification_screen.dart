@@ -16,9 +16,8 @@ class NotificationScreen extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Divider(),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimensions.width15, vertical: Dimensions.height15),
                 child: Text(
                   'Request',
                   style: TextStyle(
@@ -46,9 +45,8 @@ class NotificationScreen extends StatelessWidget {
                           backgroundColor: Colors.white,
                           side: const BorderSide(color: Colors.black),
                         ),
-                        child: Text(
+                        child:const Text(
                           'Confirm',
-                          style: TextStyle(fontSize: Dimensions.font20),
                         ),
                       ),
                       const SizedBox(width: 8),

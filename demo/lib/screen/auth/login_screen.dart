@@ -1,5 +1,6 @@
 import 'package:demo/app/dimensions.dart';
 import 'package:demo/screen/auth/forgot_password_screen.dart';
+import 'package:demo/screen/auth/signup_screen.dart';
 import 'package:demo/screen/home/main_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -204,7 +205,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 20),
                           Center(
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SignUpScreen()));
+                              },
                               child: const Text(
                                 'Create new account',
                                 style: TextStyle(color: Colors.black),

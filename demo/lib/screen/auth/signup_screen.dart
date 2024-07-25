@@ -1,12 +1,21 @@
+import 'package:demo/screen/home/main_screen.dart';
 import 'package:flutter/material.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
   @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String? phoneNumber;
+  String? password;
+  String? confirmPassword;
+
+  @override
   Widget build(BuildContext context) {
-    // final double screenHeight = MediaQuery.of(context).size.height;
-    // final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: LayoutBuilder(
@@ -23,203 +32,253 @@ class SignUpScreen extends StatelessWidget {
                     style: const TextStyle(
                       fontFamily: 'Montserrat',
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        const SizedBox(height: 50), // Add some space at the top
-                        const Text(
-                          'Create Account',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF6D9886),
-                          ),
-                        ),
-                        const SizedBox(height: 25),
-                        const Text(
-                          'Create an account so you can explore all the existing jobs',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Phone number',
-                            hintStyle: const TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0xFFF2E7D5),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
-                          ),
-                        ),
-                        const SizedBox(height: 25),
-                        TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: 'Password',
-                            hintStyle: const TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0xFFF2E7D5),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
-                          ),
-                        ),
-                        const SizedBox(height: 25),
-                        TextField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: 'Confirm Password',
-                            hintStyle: const TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0xFFF2E7D5),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              borderSide: const BorderSide(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
-                          ),
-                        ),
-                        const SizedBox(height: 35),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Handle sign in
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            minimumSize: const Size(double.infinity, 56),
-                          ),
-                          child: const Text(
-                            'Sign up',
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          const SizedBox(height: 50), // Add some space at the top
+                          const Text(
+                            'Create Account',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 16,
-                                color:
-                                    Color.fromARGB(255, 255, 255, 255)),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Center(
-                          child: TextButton(
-                            onPressed: () {
-                              // Handle create new account
-                            },
-                            child: const Text(
-                              'Already have an account',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 60),
-                        const Center(
-                          child: Text(
-                            'Or continue with',
-                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
                               color: Color(0xFF6D9886),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SocialMediaButton(
-                              imagePath: 'assets/images/google.png',
-                              onTap: () {
-                                // Handle Google sign in
-                              },
+                          const SizedBox(height: 25),
+                          const Text(
+                            'Create an account so you can explore all the existing jobs',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
                             ),
-                            const SizedBox(width: 16), // Space between buttons
-                            SocialMediaButton(
-                              imagePath: 'assets/images/facebook.png',
-                              onTap: () {
-                                // Handle Facebook sign in
-                              },
+                          ),
+                          const SizedBox(height: 30),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Phone number',
+                              labelStyle: const TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                              filled: true,
+                              fillColor: const Color(0xFFF2E7D5),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 18.0, horizontal: 18.0),
                             ),
-                            const SizedBox(width: 16), // Space between buttons
-                            SocialMediaButton(
-                              imagePath: 'assets/images/apple.png',
-                              onTap: () {
-                                // Handle Apple sign in
-                              },
+                            onChanged: (value) {
+                              setState(() {
+                                phoneNumber = value;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please input your phone number';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 25),
+                          TextFormField(
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              labelStyle: const TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                              filled: true,
+                              fillColor: const Color(0xFFF2E7D5),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 18.0, horizontal: 16.0),
                             ),
-                          ],
-                        ),
-                        const Spacer(), // Fill remaining space
-                        const SizedBox(height: 30), // Add some space at the bottom
-                      ],
+                            onChanged: (value) {
+                              setState(() {
+                                password = value;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please input your password';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 25),
+                          TextFormField(
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              labelText: 'Confirm Password',
+                              labelStyle: const TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                              filled: true,
+                              fillColor: const Color(0xFFF2E7D5),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 18.0, horizontal: 16.0),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                confirmPassword = value;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please confirm your password';
+                              } else if (value != password) {
+                                return 'Passwords do not match';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 35),
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                // Handle sign up
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => MainScreen()),
+                                      (Route<dynamic> route) => false,
+                                );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black,
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              minimumSize: const Size(double.infinity, 56),
+                            ),
+                            child: const Text(
+                              'Sign up',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Center(
+                            child: TextButton(
+                              onPressed: () {
+                                // Handle "Already have an account"
+                              },
+                              child: const Text(
+                                'Already have an account',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 60),
+                          const Center(
+                            child: Text(
+                              'Or continue with',
+                              style: TextStyle(
+                                color: Color(0xFF6D9886),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SocialMediaButton(
+                                imagePath: 'assets/images/google.png',
+                                onTap: () {
+                                  // Handle Google sign in
+                                },
+                              ),
+                              const SizedBox(width: 16), // Space between buttons
+                              SocialMediaButton(
+                                imagePath: 'assets/images/facebook.png',
+                                onTap: () {
+                                  // Handle Facebook sign in
+                                },
+                              ),
+                              const SizedBox(width: 16), // Space between buttons
+                              SocialMediaButton(
+                                imagePath: 'assets/images/apple.png',
+                                onTap: () {
+                                  // Handle Apple sign in
+                                },
+                              ),
+                            ],
+                          ),
+                          const Spacer(), // Fill remaining space
+                          const SizedBox(height: 30), // Add some space at the bottom
+                        ],
+                      ),
                     ),
                   ),
                 ),

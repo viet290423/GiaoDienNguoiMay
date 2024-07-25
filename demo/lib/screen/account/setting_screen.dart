@@ -1,4 +1,5 @@
 import 'package:demo/screen/auth/login_screen.dart';
+import 'package:demo/screen/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/setting_widget.dart';
 import 'account_screen.dart';
@@ -87,7 +88,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 buildSettingItem('Log out', trailing: const Icon(Icons.logout), onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    MaterialPageRoute(builder: (context) => SplashScreen()),
                   );
                 }),
                 buildSettingItem(
