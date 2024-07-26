@@ -17,14 +17,14 @@ class UserPostsScreen extends StatelessWidget {
         .toList();
 
     final List<String> imagePaths = [
-      'assets/images/anh1.jpg',
-      'assets/images/flowers.png',
-      'assets/images/anh1.jpg',
-      'assets/images/flowers.png',
-      'assets/images/anh1.jpg',
-      'assets/images/flowers.png',
-      'assets/images/anh1.jpg',
-      'assets/images/flowers.png',
+      'assets/images/labubu.webp',
+      'assets/images/labubu1.webp',
+      'assets/images/labubu2.webp',
+      'assets/images/labubu3.jpg',
+      'assets/images/labubu4.webp',
+      'assets/images/labubu5.webp',
+      'assets/images/labubu6.webp',
+      'assets/images/labubu7.jpg',
       'assets/images/anh1.jpg',
       'assets/images/flowers.png',
       'assets/images/anh1.jpg',
@@ -68,6 +68,7 @@ class UserPostsScreen extends StatelessWidget {
                                 },
                               ),
                               const Spacer(),
+                              SizedBox(height: 75),
                               Container(
                                 child: Row(
                                   children: [
