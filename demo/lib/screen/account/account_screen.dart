@@ -1,6 +1,7 @@
-import 'package:demo/app/dimensions.dart';
 import 'package:demo/screen/account/setting_screen.dart';
 import 'package:flutter/material.dart';
+import '../../app/dimensions.dart';
+import '../friends/friends_screen.dart'; // Đảm bảo bạn đã import FriendsPage
 
 class AccountScreen extends StatelessWidget {
   final List<String> imagePaths = [
@@ -19,7 +20,7 @@ class AccountScreen extends StatelessWidget {
   ];
 
   // Hàm buildColumn với tham số màu sắc cho giá trị
-  Column buildColumn(String label, String value, Color valueColor) {
+  Column buildColumn(String label, String value, Color valueColor, VoidCallback? onTap) {
     return Column(
       children: [
         Text(
@@ -27,9 +28,12 @@ class AccountScreen extends StatelessWidget {
           style: TextStyle(fontSize: 20),
         ),
         SizedBox(height: 8),
-        Text(
-          value,
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: valueColor),
+        GestureDetector(
+          onTap: onTap,
+          child: Text(
+            value,
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: valueColor),
+          ),
         ),
       ],
     );
@@ -73,15 +77,18 @@ class AccountScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Container(
-
               padding: EdgeInsets.all(Dimensions.height10),
-
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  buildColumn('Like', '90', Color(0xFF6D9886)),
-                  buildColumn('Post', '3', Color(0xFF6D9886)),
-                  buildColumn('Friends', '6', Color(0xFF6D9886)),
+                  buildColumn('Like', '90', Color(0xFF6D9886), null),
+                  buildColumn('Post', '3', Color(0xFF6D9886), null),
+                  buildColumn('Friends', '6', Color(0xFF6D9886), () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FriendsPage()),
+                    );
+                  }),
                 ],
               ),
             ),
