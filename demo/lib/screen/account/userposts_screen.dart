@@ -1,4 +1,5 @@
 import 'package:demo/app/dimensions.dart';
+import 'package:demo/screen/home/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -60,11 +61,16 @@ class UserPostsScreen extends StatelessWidget {
                             children: [
                               IconButton(
                                 icon: Icon(
-                                  Icons.arrow_back,
+                                  CupertinoIcons.back,
                                   size: Dimensions.iconSize24,
                                 ),
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+                                  // Navigator.of(context).pop();
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => MainScreen()),
+                                        (Route<dynamic> route) => false,
+                                  );
                                 },
                               ),
                               const Spacer(),

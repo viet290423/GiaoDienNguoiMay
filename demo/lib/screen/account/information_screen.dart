@@ -1,3 +1,4 @@
+import 'package:demo/app/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,7 +39,7 @@ class _InformationPageState extends State<InformationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Information',
           style: TextStyle(
             fontSize: 30,
@@ -62,7 +63,7 @@ class _InformationPageState extends State<InformationPage> {
                 height: 150,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  image: DecorationImage(
+                  image: const DecorationImage(
                     image: AssetImage('assets/images/labubu.webp'), // Thay đổi đường dẫn ảnh
                     fit: BoxFit.cover,
                   ),
@@ -70,8 +71,8 @@ class _InformationPageState extends State<InformationPage> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Username',
               style: TextStyle(
                 fontSize: 18,
@@ -79,23 +80,45 @@ class _InformationPageState extends State<InformationPage> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                controller: _usernameController,
-                readOnly: !_isEditing, // Chỉ đọc khi không chỉnh sửa
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15), // Bo góc tròn cho khung nhập liệu
-                  ),
-                  hintText: 'Enter username',
+            const SizedBox(height: 10),
+            TextField(
+              controller: _usernameController,
+              readOnly: !_isEditing, // Chỉ đọc khi không chỉnh sửa
+              decoration: InputDecoration(
+                hintText: 'Enter new password',
+                hintStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Color.fromARGB(255, 0, 0, 0),
                 ),
+                filled: true,
+                fillColor: const Color(0xFFF2E7D5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 18.0, horizontal: 16.0),
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Phone Number',
               style: TextStyle(
                 fontSize: 18,
@@ -103,44 +126,65 @@ class _InformationPageState extends State<InformationPage> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                controller: _phoneNumberController,
-                readOnly: !_isEditing, // Chỉ đọc khi không chỉnh sửa
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15), // Bo góc tròn cho khung nhập liệu
-                  ),
-                  hintText: 'Enter phone number',
+            const SizedBox(height: 10),
+            TextField(
+              controller: _phoneNumberController,
+              readOnly: !_isEditing, // Chỉ đọc khi không chỉnh sửa
+              decoration: InputDecoration(
+                hintText: 'Enter new password',
+                hintStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Color.fromARGB(255, 0, 0, 0),
                 ),
+                filled: true,
+                fillColor: const Color(0xFFF2E7D5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 18.0, horizontal: 16.0),
               ),
             ),
-            SizedBox(height: 20),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  setState(() {
-                    if (_isEditing) {
-                      // Lưu thay đổi
-                      _saveData();
-                    }
-                    _isEditing = !_isEditing; // Chuyển trạng thái chỉnh sửa
-                  });
-                },
-                icon: Icon(_isEditing ? Icons.save : Icons.edit),
-                label: Text(_isEditing ? 'Save' : 'Edit'),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.black, // Màu nền của nút
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30), // Bo góc tròn cho nút bấm
-                  ),
+            SizedBox(height: Dimensions.height30),
+            ElevatedButton.icon(
+              onPressed: () {
+                setState(() {
+                  if (_isEditing) {
+                    // Lưu thay đổi
+                    _saveData();
+                  }
+                  _isEditing = !_isEditing; // Chuyển trạng thái chỉnh sửa
+                });
+              },
+              icon: Icon(_isEditing ? Icons.save : Icons.edit, color: const Color.fromARGB(255, 255, 255, 255),),
+              label: Text(_isEditing ? 'Save' : 'Edit', style: TextStyle(
+                  fontSize: Dimensions.font20 - 2,
+                  color: const Color.fromARGB(255, 255, 255, 255)),),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
+                minimumSize: const Size(double.infinity, 56),
               ),
             ),
           ],

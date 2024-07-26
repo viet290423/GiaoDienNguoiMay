@@ -1,3 +1,4 @@
+import 'package:demo/app/dimensions.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordPage extends StatefulWidget {
@@ -44,18 +45,40 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               ),
             ),
             SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                controller: _oldPasswordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  hintText: 'Enter old password',
+            TextField(
+              obscureText: true,
+              controller: _oldPasswordController,
+              decoration: InputDecoration(
+                hintText: 'Enter old password',
+                hintStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Color.fromARGB(255, 0, 0, 0),
                 ),
+                filled: true,
+                fillColor: const Color(0xFFF2E7D5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 18.0, horizontal: 16.0),
               ),
             ),
             SizedBox(height: 20),
@@ -68,18 +91,40 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               ),
             ),
             SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                controller: _newPasswordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  hintText: 'Enter new password',
+            TextField(
+              obscureText: true,
+              controller: _newPasswordController,
+              decoration: InputDecoration(
+                hintText: 'Enter new password',
+                hintStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Color.fromARGB(255, 0, 0, 0),
                 ),
+                filled: true,
+                fillColor: const Color(0xFFF2E7D5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 18.0, horizontal: 16.0),
               ),
             ),
             SizedBox(height: 20),
@@ -92,46 +137,69 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               ),
             ),
             SizedBox(height: 10),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: TextField(
-                controller: _confirmPasswordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  hintText: 'Confirm new password',
+            TextField(
+              obscureText: true,
+              controller: _confirmPasswordController,
+              decoration: InputDecoration(
+                hintText: 'Confirm new password',
+                hintStyle: const TextStyle(
+                  fontFamily: 'Montserrat',
+                  color: Color.fromARGB(255, 0, 0, 0),
                 ),
+                filled: true,
+                fillColor: const Color(0xFFF2E7D5),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: 18.0, horizontal: 16.0),
               ),
             ),
-            SizedBox(height: 20),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 12),
-              child: ElevatedButton(
-                onPressed: () {
-                  if (_isPasswordValid()) {
-                    // Xử lý logic thay đổi mật khẩu ở đây
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Password changed successfully')),
-                    );
-                  } else {
-                    // Hiển thị thông báo lỗi nếu mật khẩu không khớp
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Passwords do not match')),
-                    );
-                  }
-                },
-                child: Text('Change Password'),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.black, // Màu nền của nút
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30), // Bo góc tròn cho nút bấm
-                  ),
+            SizedBox(height: Dimensions.height45),
+            ElevatedButton(
+              onPressed: () {
+                if (_isPasswordValid()) {
+                  // Xử lý logic thay đổi mật khẩu ở đây
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Password changed successfully')),
+                  );
+                } else {
+                  // Hiển thị thông báo lỗi nếu mật khẩu không khớp
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Passwords do not match')),
+                  );
+                }
+              },
+              child: Text('Change Password',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Color.fromARGB(255, 255, 255, 255)),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
+                minimumSize: const Size(double.infinity, 56),
               ),
             ),
           ],

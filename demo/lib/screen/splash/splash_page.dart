@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:demo/screen/auth/login_screen.dart';
+import 'package:demo/screen/auth/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -37,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen>
         const Duration(seconds: 3),
         () => Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()),
+            MaterialPageRoute(builder: (context) => WelcomeScreen()),
                 (route) => false
         ),
     );

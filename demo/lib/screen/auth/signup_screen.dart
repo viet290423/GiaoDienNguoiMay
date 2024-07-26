@@ -1,3 +1,4 @@
+import 'package:demo/screen/auth/login_screen.dart';
 import 'package:demo/screen/home/main_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -232,7 +233,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Center(
                             child: TextButton(
                               onPressed: () {
-                                // Handle "Already have an account"
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()),
+                                      (Route<dynamic> route) => false,
+                                );
                               },
                               child: const Text(
                                 'Already have an account',

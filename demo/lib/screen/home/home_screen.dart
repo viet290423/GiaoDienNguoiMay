@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     {
       'image': 'assets/images/anh1.jpg',
       'avatar': 'assets/images/flowers.png',
-      'name': 'Minh',
+      'name': 'Minh Thu',
       'time': '5 min ago',
       'caption': 'Just chilling here!',
       'likes': 800,
