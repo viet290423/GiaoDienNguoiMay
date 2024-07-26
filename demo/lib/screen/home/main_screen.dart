@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -16,13 +16,18 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
-  final screens = [
-    HomeScreen(),
+  final List<Widget> screens = [
+    HomeScreen(
+      image: '',
+      caption: '',
+      time: DateTime.now(),
+    ), // Pass default values for initial rendering
     NotificationScreen(),
     AddScreen(),
     ChatScreen(),
     AccountScreen()
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,11 +39,11 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: Container(
         color: Colors.white,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           child: GNav(
             selectedIndex: _currentIndex,
             backgroundColor: Colors.white,
-            color: Colors.grey[400!],
+            color: Colors.grey[400],
             activeColor: Colors.black,
             tabBackgroundColor: Colors.white,
             gap: 5,
@@ -46,31 +51,26 @@ class _MainScreenState extends State<MainScreen> {
               GButton(
                 icon: Icons.home_outlined,
                 iconSize: 30,
-                // text: 'Home',
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               ),
               GButton(
                 icon: CupertinoIcons.bell,
                 iconSize: 30,
-                // text: 'Search',
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               ),
               GButton(
                 icon: CupertinoIcons.add_circled,
                 iconSize: 30,
-                // text: 'Add',
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               ),
               GButton(
                 icon: CupertinoIcons.conversation_bubble,
                 iconSize: 30,
-                // text: 'Chat',
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               ),
               GButton(
                 icon: CupertinoIcons.person,
                 iconSize: 30,
-                // text: 'Account',
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               ),
             ],
