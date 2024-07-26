@@ -44,6 +44,8 @@ dependencies:
   crypto: ^3.0.1
   emoji_picker_flutter: ^1.0.5
   encrypt: ^5.0.0
+  shared_preferences: ^2.0.13
+
 
 dev_dependencies:
   flutter_test:
