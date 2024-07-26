@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:intl/intl.dart'; // Để sử dụng định dạng thời gian
+import 'package:intl/intl.dart';
 import 'hienthi.dart';
- // Import file hienthi.dart để sử dụng class HienThi
+import 'package:demo/models/post_model.dart';
+
+
 
 class SaveAddScreen extends StatefulWidget {
   final String imagePath;
   final IO.Socket? socket;
+  
 
   SaveAddScreen({required this.imagePath, required this.socket});
 
@@ -19,7 +22,7 @@ class SaveAddScreen extends StatefulWidget {
 }
 
 class _SaveAddScreenState extends State<SaveAddScreen> {
-  TextEditingController _commentController = TextEditingController();
+  TextEditingController _captionController = TextEditingController();
   bool _isFileExist = false;
 
   @override
@@ -44,19 +47,22 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
     }
 
     final bytes = File(widget.imagePath).readAsBytesSync();
-    final base64Image = base64Encode(bytes);
-    final comment = _commentController.text;
+    final image = base64Encode(bytes);
+    final caption = _captionController.text;
 
-    widget.socket?.emit('save_image', {'image': base64Image, 'comment': comment});
+    widget.socket
+        ?.emit('save_image', {'image': image, 'caption': caption});
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('Data sent to server')));
 
-    // Chuyển sang màn hình hiển thị ảnh và comment
-    // Thay vì truyền null vào createdAt, chúng ta sẽ truyền DateTime.now()
+    // Chuyển sang màn hình hiển thị ảnh và caption
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HienThi(imageBase64: base64Image, comment: comment, createdAt: DateTime.now()),
+        builder: (context) => HienThi(
+            image: image,
+            caption: caption,
+            time: DateTime.now()),
       ),
     );
   }
@@ -87,9 +93,9 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
-                controller: _commentController,
+                controller: _captionController,
                 decoration: InputDecoration(
-                  labelText: 'Comment',
+                  labelText: 'Caption',
                 ),
               ),
             ),

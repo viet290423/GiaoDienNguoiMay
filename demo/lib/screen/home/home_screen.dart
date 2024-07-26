@@ -6,8 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:demo/screen/add/add_screen.dart';
 import 'package:demo/widgets/comment_widget.dart';
 import 'package:demo/widgets/like_widget.dart';
+import 'package:demo/models/post_model.dart';
 
 class HomeScreen extends StatefulWidget {
+  final String image;
+  final String caption;
+  final DateTime time;
+
+  HomeScreen(
+      {required this.image,
+      required this.caption,
+      required this.time});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -49,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'comments': 500,
       'isFavorite': false,
     },
+    
   ];
 
   List<Map<String, dynamic>> get filteredPosts {

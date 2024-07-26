@@ -16,28 +16,28 @@ class _AddScreenState extends State<AddScreen> {
   @override
   void initState() {
     super.initState();
-    // _initializeCamera();
+    _initializeCamera();
     _initializeSocket();
   }
 
   void _initializeSocket() {
-    socket = IO.io('http://192.168.2.4:3000', IO.OptionBuilder().setTransports(['websocket']).build());
+    socket = IO.io('http://192.168.2.4:8080', IO.OptionBuilder().setTransports(['websocket']).build());
     socket?.onConnect((_) => print('Connected to Socket.IO server'));
     socket?.onDisconnect((_) => print('Disconnected from Socket.IO server'));
   }
 
-  // Future<void> _initializeCamera() async {
-  //   final cameras = await availableCameras();
-  //   final firstCamera = cameras.first;
+  Future<void> _initializeCamera() async {
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
 
-  //   _controller = CameraController(
-  //     firstCamera,
-  //     ResolutionPreset.high,
-  //   );
+    _controller = CameraController(
+      firstCamera,
+      ResolutionPreset.high,
+    );
 
-  //   _initializeControllerFuture = _controller!.initialize();
-  //   setState(() {});
-  // }
+    _initializeControllerFuture = _controller!.initialize();
+    setState(() {});
+  }
 
   @override
   void dispose() {
