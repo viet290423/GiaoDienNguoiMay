@@ -210,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildLikeButton(post),
-                _buildCommentButton(post.comments),
+                _buildCommentButton(context, post),
               ],
             ),
           ],
@@ -254,10 +254,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCommentButton(int comments) {
+  Widget _buildCommentButton(BuildContext context, Post post) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => CommentScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => CommentScreen(userName: post.name, avatarUser: post.avatar, image: post.image, time: post.time, caption: post.caption, initialComments: post.comments, posts: posts, initialLikes: post.likes, initialIsFavorite: post.isFavorite,)));
       },
       child: Container(
         width: 150,
@@ -273,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
               width: Dimensions.width10 / 2,
             ),
             Text(
-              '$comments',
+              '${post.comments}',
               textAlign: TextAlign.right,
               style: TextStyle(
                 color: Colors.black,

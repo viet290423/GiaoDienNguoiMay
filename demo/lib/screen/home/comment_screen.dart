@@ -1,27 +1,51 @@
+import 'package:demo/models/post_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
 
+import '../../app/dimensions.dart';
+
 class CommentScreen extends StatefulWidget {
-  const CommentScreen({super.key});
+  final String userName;
+  final String avatarUser;
+  final String image;
+  final String time;
+  final String caption;
+  final int initialLikes;
+  final int initialComments;
+  final bool initialIsFavorite;
+  final List<Post> posts;
+
+  const CommentScreen({
+    super.key,
+    required this.userName,
+    required this.avatarUser,
+    required this.image,
+    required this.time,
+    required this.caption,
+    required this.initialLikes,
+    required this.initialComments,
+    required this.posts,
+    required this.initialIsFavorite,
+  });
+
 
   @override
   _CommentScreenState createState() => _CommentScreenState();
 }
 
 class _CommentScreenState extends State<CommentScreen> {
-  final Map<String, dynamic> infor = {
-    'name': 'Thảo Nguyên',
-    'pic': 'assets/images/anh1.jpg',
-    'like': '1,2k',
-    'comment': '1,2k',
-    'isFavorite': false,
-    'time': '2 min ago',
-    'avatar': 'assets/images/flowers.png',
-  };
-
+  // final Map<String, dynamic> infor = {
+  //   'name': 'Thảo Nguyên',
+  //   'pic': 'assets/images/anh1.jpg',
+  //   'like': '1,2k',
+  //   'comment': '1,2k',
+  //   'isFavorite': false,
+  //   'time': '2 min ago',
+  //   'avatar': 'assets/images/flowers.png',
+  // };
   final List<Map<String, String>> comments = [
     {
       'name': 'Khánh',
@@ -156,55 +180,72 @@ void addComment(String username, String comment) {
 
 @override
 Widget build(BuildContext context) {
-  final commentController = TextEditingController();
+  int likes = widget.initialLikes;
+  int comment = widget.initialComments;
+  bool isFavorite = widget.initialIsFavorite;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   likes = widget.initialLikes;
+  //   comment = widget.initialComments;
+  //   isFavorite = widget.initialIsFavorite;
+  // }
+
+  final commentController = TextEditingController();
   return Scaffold(
+    backgroundColor: Colors.white,
     appBar: AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.black),
+        icon: Icon(CupertinoIcons.back, color: Colors.black, size: Dimensions.iconSize24 * 2,),
         onPressed: () {
           Navigator.pop(context);
         },
       ),
-      title: Row(
-        children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundImage: AssetImage(infor['avatar']),
-          ),
-          const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 20,
-                child: Text(
-                  infor['name'],
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w700,
+      title: Padding(
+        padding: EdgeInsets.only(top: Dimensions.height10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              radius: Dimensions.radius20,
+              backgroundImage: AssetImage(widget.avatarUser),
+            ),
+            SizedBox(width: Dimensions.height10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: Dimensions.height20,
+                  child: Text(
+                    widget.userName,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: Dimensions.font16,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-                child: Text(
-                  infor['time'],
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12,
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.w400,
+                SizedBox(
+                  height: Dimensions.height20 + 2,
+                  child: Text(
+                    widget.time,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: Dimensions.font12,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     ),
     body: Column(
@@ -212,23 +253,41 @@ Widget build(BuildContext context) {
         Expanded(
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 30),
+                SizedBox(height: Dimensions.height10),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: SizedBox(
+                    width: 313,
+                    height: 30,
+                    child: Text(
+                      widget.caption,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: Dimensions.height10),
                 GestureDetector(
                   onDoubleTap: () {
                     setState(() {
-                      infor['isFavorite'] = !infor['isFavorite'];
-                      infor['like'] = infor['isFavorite'] ? '1,3k' : '1,2k';
+                      isFavorite = !isFavorite;
+                      likes += isFavorite ? 1 : -1;
                     });
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Container(
                       width: double.infinity,
-                      height: 250,
+                      height: Dimensions.popularImgSize,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(infor['pic']),
+                          image: AssetImage(widget.image),
                           fit: BoxFit.fill,
                         ),
                         borderRadius: BorderRadius.circular(30),
@@ -240,32 +299,63 @@ Widget build(BuildContext context) {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            infor['isFavorite']
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              infor['isFavorite'] = !infor['isFavorite'];
-                              infor['like'] = infor['isFavorite'] ? '1,3k' : '1,2k';
-                            });
-                          },
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isFavorite = !isFavorite;
+                          likes += isFavorite ? 1 : -1;
+                        });
+                      },
+                      child: SizedBox(
+                        width: 150,
+                        height: 40,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              isFavorite ? Icons.favorite : Icons.favorite_border,
+                              color: isFavorite ? Colors.red : Colors.black,
+                            ),
+                            SizedBox(width: Dimensions.width10 / 2),
+                            Text(
+                              '$likes',
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: Dimensions.font16,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(infor['like']),
-                      ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        Icon(
-                          CupertinoIcons.chat_bubble,
-                          color: Colors.black,
-                        ),
-                        Text(infor['comment']),
-                      ],
+                    SizedBox(
+                      width: 150,
+                      height: 40,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            CupertinoIcons.chat_bubble,
+                            color: Colors.black,
+                          ),
+                          SizedBox(
+                            width: Dimensions.width10 / 2,
+                          ),
+                          Text(
+                            '$comment',
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: Dimensions.font16,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -341,6 +431,7 @@ class CommentItem extends StatefulWidget {
 
 class _CommentItemState extends State<CommentItem> {
   bool isDecoded = false;
+  bool isLiked = false;
   late String currentComment;
 
   @override
@@ -358,6 +449,7 @@ class _CommentItemState extends State<CommentItem> {
           currentComment = widget.originalComment;
         }
         isDecoded = !isDecoded;
+        isLiked = !isLiked;
       });
     });
   }
@@ -402,19 +494,16 @@ class _CommentItemState extends State<CommentItem> {
             ),
           ),
           const SizedBox(width: 10),
-          Column(
-            children: [
-              IconButton(
-                icon: const Icon(
-                  CupertinoIcons.chat_bubble,
-                  color: Colors.black,
-                ),
-                onPressed: toggleComment,
-              ),
-            ],
+          IconButton(
+            icon: Icon(
+              isLiked ? CupertinoIcons.eye : CupertinoIcons.eye_slash,
+              color: Colors.black,
+            ),
+            onPressed: toggleComment,
           ),
         ],
       ),
     );
   }
 }
+
