@@ -1,5 +1,6 @@
 import 'package:demo/screen/auth/login_screen.dart';
 import 'package:demo/screen/home/main_screen.dart';
+import 'package:demo/screen/splash/splash_page.dart';
 // import 'package:demo/screen/test.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       // home: MainScreen(),
-      home: LoginScreen(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

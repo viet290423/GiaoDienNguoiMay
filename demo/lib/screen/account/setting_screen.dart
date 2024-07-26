@@ -1,7 +1,10 @@
 import 'package:demo/screen/auth/login_screen.dart';
+import 'package:demo/screen/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/setting_widget.dart';
 import 'account_screen.dart';
+import 'change_password_screen.dart';
+import 'information_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
@@ -37,8 +40,18 @@ class _SettingScreenState extends State<SettingScreen> {
             buildSettingSection(
               title: 'Account',
               children: [
-                buildSettingItem('Profile', onTap: () {}),
-                buildSettingItem('Change Password', onTap: () {}),
+                buildSettingItem('Information', onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InformationPage()),
+                  );
+                }),
+                buildSettingItem('Change Password', onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+                  );
+                }),
               ],
             ),
             const SizedBox(height: 20),
@@ -87,7 +100,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 buildSettingItem('Log out', trailing: const Icon(Icons.logout), onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    MaterialPageRoute(builder: (context) => SplashScreen()),
                   );
                 }),
                 buildSettingItem(
