@@ -1,16 +1,15 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:demo/app/dimensions.dart';
 import 'package:demo/controller/post_controller.dart';
+import 'package:demo/models/post_model.dart';
 import 'package:demo/screen/account/userposts_screen.dart';
 import 'package:demo/screen/home/comment_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/screen/add/add_screen.dart';
-import 'package:demo/widgets/comment_widget.dart';
-import 'package:demo/widgets/like_widget.dart';
-import 'package:demo/models/post_model.dart';
-import 'package:provider/provider.dart'; // Import model
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,18 +18,19 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-
 class _HomeScreenState extends State<HomeScreen> {
   String searchQuery = '';
   TextEditingController searchController = TextEditingController();
 
-  final List<Post> posts = Post.generatePosts();
   List<Post> get filteredPosts {
     final posts = Provider.of<PostController>(context).posts;
     if (searchQuery.isEmpty) {
       return posts;
     } else {
-      return posts.where((post) => post.name.toLowerCase().contains(searchQuery.toLowerCase())).toList();
+      return posts
+          .where((post) =>
+              post.name.toLowerCase().contains(searchQuery.toLowerCase()))
+          .toList();
     }
   }
 
@@ -57,7 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
             child: IconButton(
                 onPressed: () {
                   showSearch(
-                      context: context, delegate: CustomSearch(posts: Provider.of<PostController>(context, listen: false).posts));
+                      context: context,
+                      delegate: CustomSearch(
+                          posts: Provider.of<PostController>(context,
+                                  listen: false)
+                              .posts));
                 },
                 icon: Icon(
                   Icons.search,
@@ -177,10 +181,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: double.infinity,
                 height: Dimensions.popularImgSize,
                 decoration: ShapeDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(post.image),
-                    fit: BoxFit.fill,
-                  ),
+                  image: post.decodedImage != null
+                      ? DecorationImage(
+                          image: post.decodedImage!,
+                          fit: BoxFit.fill,
+                        )
+                      : DecorationImage(
+                          image: AssetImage(post.image),
+                          fit: BoxFit.fill,
+                        ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -203,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 30),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildLikeButton(post),
                 _buildCommentButton(context, post),
@@ -224,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       },
       child: Container(
-        width: 150,
+        // width: 150,
         height: 40,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -253,10 +262,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildCommentButton(BuildContext context, Post post) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => CommentScreen(userName: post.name, avatarUser: post.avatar, image: post.image, time: post.time, caption: post.caption, initialComments: post.comments, posts: posts, initialLikes: post.likes, initialIsFavorite: post.isFavorite,)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CommentScreen(
+                      userName: post.name,
+                      avatarUser: post.avatar,
+                      image: post.image,
+                      time: post.time,
+                      caption: post.caption,
+                      initialComments: post.comments,
+                      posts: filteredPosts,
+                      initialLikes: post.likes,
+                      initialIsFavorite: post.isFavorite,
+                      decodedImage: post.decodedImage,
+                    )));
       },
-      child: Container(
-        width: 150,
+      child: SizedBox(
+        // width: 150,
         height: 40,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -315,8 +338,7 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     final List<Post> filteredPosts = posts
-        .where(
-            (post) => post.name.toLowerCase().contains(query.toLowerCase()))
+        .where((post) => post.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
     return ListView.builder(
@@ -348,8 +370,7 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final List<Post> filteredPosts = posts
-        .where(
-            (post) => post.name.toLowerCase().contains(query.toLowerCase()))
+        .where((post) => post.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
     return ListView.builder(

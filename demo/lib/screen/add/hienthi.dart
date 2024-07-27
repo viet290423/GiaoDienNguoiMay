@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:demo/app/dimensions.dart';
 import 'package:demo/screen/home/main_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,23 +57,25 @@ class _HienThiState extends State<HienThi> {
       appBar: AppBar(
         title: Text('Hiển Thị Ảnh'),
         leading: IconButton(
-          icon: Icon(CupertinoIcons.back, size: Dimensions.iconSize16 * 2,),
+          icon: Icon(
+            CupertinoIcons.back,
+            size: Dimensions.iconSize16 * 2,
+          ),
           onPressed: () {
             Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (context) => MainScreen()),
-                    (Route<dynamic> route) => false,
+              MaterialPageRoute(builder: (context) => MainScreen()),
+              (Route<dynamic> route) => false,
             ); // Quay về trang trước đó
           },
         ),
       ),
       body: Center(
-        child: _buildPost(widget.post.toMap(), 0),
+        child: _buildPost(widget.post),
       ),
     );
   }
 
-  Widget _buildPost(Map<String, dynamic> post, int index) {
+  Widget _buildPost(Post post) {
     return Container(
       margin: EdgeInsets.only(
           top: Dimensions.height30,
@@ -108,7 +109,7 @@ class _HienThiState extends State<HienThi> {
               children: [
                 CircleAvatar(
                   radius: Dimensions.radius20,
-                  backgroundImage: AssetImage(post['avatar']),
+                  backgroundImage: AssetImage(post.avatar),
                 ),
                 SizedBox(width: Dimensions.height10),
                 Column(
@@ -118,7 +119,7 @@ class _HienThiState extends State<HienThi> {
                     SizedBox(
                       height: Dimensions.height20,
                       child: Text(
-                        post['name'],
+                        post.name,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: Dimensions.font16,
@@ -152,8 +153,8 @@ class _HienThiState extends State<HienThi> {
             GestureDetector(
               onDoubleTap: () {
                 setState(() {
-                  widget.post.isFavorite = !widget.post.isFavorite;
-                  widget.post.likes += widget.post.isFavorite ? 1 : -1;
+                  post.isFavorite = !post.isFavorite;
+                  post.likes += post.isFavorite ? 1 : -1;
                 });
               },
               child: Container(
@@ -161,7 +162,7 @@ class _HienThiState extends State<HienThi> {
                 height: Dimensions.popularImgSize,
                 decoration: ShapeDecoration(
                   image: DecorationImage(
-                    image: MemoryImage(Base64Decoder().convert(post['image'])),
+                    image: post.decodedImage!,
                     fit: BoxFit.fill,
                   ),
                   shape: RoundedRectangleBorder(
@@ -175,7 +176,7 @@ class _HienThiState extends State<HienThi> {
               width: 313,
               height: 30,
               child: Text(
-                post['caption'],
+                post.caption,
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 18,
@@ -186,10 +187,10 @@ class _HienThiState extends State<HienThi> {
             ),
             const SizedBox(height: 30),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildLikeButton(index),
-                _buildCommentButton(post['comments']),
+                _buildLikeButton(post),
+                _buildCommentButton(post),
               ],
             ),
           ],
@@ -198,27 +199,27 @@ class _HienThiState extends State<HienThi> {
     );
   }
 
-  Widget _buildLikeButton(int index) {
+  Widget _buildLikeButton(Post post) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          widget.post.isFavorite = !widget.post.isFavorite;
-          widget.post.likes += widget.post.isFavorite ? 1 : -1;
+          post.isFavorite = !post.isFavorite;
+          post.likes += post.isFavorite ? 1 : -1;
         });
       },
       child: Container(
-        width: 150,
+        // width: 150,
         height: 40,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              widget.post.isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: widget.post.isFavorite ? Colors.red : Colors.black,
+              post.isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: post.isFavorite ? Colors.red : Colors.black,
             ),
             SizedBox(width: Dimensions.width10 / 2),
             Text(
-              '${widget.post.likes}',
+              '${post.likes}',
               textAlign: TextAlign.right,
               style: TextStyle(
                 color: Colors.black,
@@ -233,14 +234,32 @@ class _HienThiState extends State<HienThi> {
     );
   }
 
-
-  Widget _buildCommentButton(int comments) {
-    return Row(
-      children: [
-        Icon(Icons.comment, color: Colors.grey),
-        SizedBox(width: 5),
-        Text('$comments comments'),
-      ],
+  Widget _buildCommentButton(Post post) {
+    return SizedBox(
+      // width: 150,
+      height: 40,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            CupertinoIcons.chat_bubble,
+            color: Colors.black,
+          ),
+          SizedBox(
+            width: Dimensions.width10 / 2,
+          ),
+          Text(
+            '${post.comments}',
+            textAlign: TextAlign.right,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: Dimensions.font16,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

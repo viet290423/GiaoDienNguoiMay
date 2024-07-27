@@ -18,6 +18,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(249, 255, 255, 255),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -49,7 +50,8 @@ class _SettingScreenState extends State<SettingScreen> {
                 buildSettingItem('Change Password', onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+                    MaterialPageRoute(
+                        builder: (context) => ChangePasswordPage()),
                   );
                 }),
               ],
@@ -58,7 +60,8 @@ class _SettingScreenState extends State<SettingScreen> {
             buildSettingSection(
               title: 'General',
               children: [
-                buildSettingItem('Language', trailing: const Text('English'), onTap: () {}),
+                buildSettingItem('Language',
+                    trailing: const Text('English'), onTap: () {}),
                 buildSettingItem(
                   'Dark Mode',
                   trailing: Switch(
@@ -97,7 +100,8 @@ class _SettingScreenState extends State<SettingScreen> {
             buildSettingSection(
               title: 'Red Zone',
               children: [
-                buildSettingItem('Log out', trailing: const Icon(Icons.logout), onTap: () {
+                buildSettingItem('Log out', trailing: const Icon(Icons.logout),
+                    onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => SplashScreen()),
@@ -174,7 +178,6 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ],
         );
-
       },
     );
   }

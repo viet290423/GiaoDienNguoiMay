@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:demo/app/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'save_add_screen.dart';
@@ -21,7 +22,8 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   void _initializeSocket() {
-    socket = IO.io('http://192.168.2.4:8080', IO.OptionBuilder().setTransports(['websocket']).build());
+    socket = IO.io('https://api-socket-io.onrender.com',
+        IO.OptionBuilder().setTransports(['websocket']).build());
     socket?.onConnect((_) => print('Connected to Socket.IO server'));
     socket?.onDisconnect((_) => print('Disconnected from Socket.IO server'));
   }
@@ -69,38 +71,54 @@ class _AddScreenState extends State<AddScreen> {
                     future: _initializeControllerFuture,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
-                        return Container(
-                          width: 350, // Width of camera preview
-                          height: 350, // Height of camera preview
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50), // Rounded corners
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: AspectRatio(
-                              aspectRatio: _controller!.value.aspectRatio,
-                              child: CameraPreview(_controller!),
+                        // Check if the controller is initialized
+                        if (_controller != null &&
+                            _controller!.value.isInitialized) {
+                          return Container(
+                            width: 350, // Width of camera preview
+                            height: 350, // Height of camera preview
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(50), // Rounded corners
                             ),
-                          ),
-                        );
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: AspectRatio(
+                                aspectRatio: _controller!.value.aspectRatio,
+                                child: CameraPreview(_controller!),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                              child: Text('Camera is not initialized'));
+                        }
                       } else {
                         return const Center(child: CircularProgressIndicator());
                       }
                     },
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: Dimensions.height30 * 2),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.autorenew),
-                        onPressed: () {},
-                        iconSize: 40,
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF5EFE2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.autorenew,
+                              color: Color(0xFF4E7360)),
+                          onPressed: () {},
+                          iconSize: 30,
+                        ),
                       ),
                       const SizedBox(width: 40),
-                      IconButton(
-                        icon: const Icon(Icons.camera),
-                        onPressed: () async {
+                      GestureDetector(
+                        onTap: () async {
                           try {
                             await _initializeControllerFuture;
                             final image = await _controller!.takePicture();
@@ -118,17 +136,37 @@ class _AddScreenState extends State<AddScreen> {
                             print(e);
                           }
                         },
-                        iconSize: 70,
+                        child: Container(
+                          width: 90,
+                          height: 90,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF5EFE2),
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Color(0xFF4E7360),
+                              width: 5,
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 40),
-                      IconButton(
-                        icon: const Icon(Icons.flash_on),
-                        onPressed: () {},
-                        iconSize: 40,
+                      Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF5EFE2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.flash_on,
+                              color: Color(0xFF4E7360)),
+                          onPressed: () {},
+                          iconSize: 30,
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  // const SizedBox(height: 20),
                 ],
               ),
             ),

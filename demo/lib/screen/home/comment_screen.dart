@@ -11,6 +11,7 @@ class CommentScreen extends StatefulWidget {
   final String userName;
   final String avatarUser;
   final String image;
+  final MemoryImage? decodedImage;
   final String time;
   final String caption;
   final int initialLikes;
@@ -28,7 +29,8 @@ class CommentScreen extends StatefulWidget {
     required this.initialLikes,
     required this.initialComments,
     required this.posts,
-    required this.initialIsFavorite,
+    required this.initialIsFavorite, 
+    this.decodedImage,
   });
 
 
@@ -286,10 +288,15 @@ Widget build(BuildContext context) {
                       width: double.infinity,
                       height: Dimensions.popularImgSize,
                       decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(widget.image),
-                          fit: BoxFit.fill,
-                        ),
+                        image: widget.decodedImage != null
+                            ? DecorationImage(
+                                image: widget.decodedImage!,
+                                fit: BoxFit.fill,
+                              )
+                            : DecorationImage(
+                                image: AssetImage(widget.image),
+                                fit: BoxFit.fill,
+                              ),
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),

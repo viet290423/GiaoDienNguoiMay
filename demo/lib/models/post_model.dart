@@ -1,5 +1,10 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+
 class Post {
   String image;
+  MemoryImage? decodedImage;
   String avatar;
   String name;
   String time;
@@ -7,9 +12,11 @@ class Post {
   int likes;
   int comments;
   bool isFavorite;
+  bool isAssetImage; // Thêm trường này để xác định loại ảnh
 
   Post({
     required this.image,
+    this.decodedImage,
     required this.avatar,
     required this.name,
     required this.time,
@@ -17,6 +24,7 @@ class Post {
     required this.likes,
     required this.comments,
     this.isFavorite = false,
+    this.isAssetImage = true, // Mặc định là ảnh từ assets
   });
 
   static List<Post> generatePosts() {
@@ -50,7 +58,26 @@ class Post {
       ),
     ];
   }
-   Map<String, dynamic> toMap() {
+
+  factory Post.fromMap(Map<String, dynamic> map) {
+    bool isAssetImage = map['isAssetImage'] ?? false;
+    return Post(
+      name: map['name'],
+      avatar: map['avatar'],
+      time: map['time'],
+      image: map['image'],
+      decodedImage: !isAssetImage && map['image'] != null
+          ? MemoryImage(base64Decode(map['image']))
+          : null,
+      caption: map['caption'],
+      likes: map['likes'],
+      comments: map['comments'],
+      isFavorite: map['isFavorite'],
+      isAssetImage: isAssetImage ?? true,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
     return {
       'image': image,
       'avatar': avatar,
@@ -60,6 +87,7 @@ class Post {
       'likes': likes,
       'comments': comments,
       'isFavorite': isFavorite,
+      'isAssetImage': isAssetImage,
     };
   }
 }
