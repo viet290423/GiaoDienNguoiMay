@@ -1,3 +1,4 @@
+import 'package:demo/models/post_model.dart';
 import 'package:demo/screen/account/account_screen.dart';
 import 'package:demo/screen/add/add_screen.dart';
 import 'package:demo/screen/chat/chat_screen.dart';
@@ -15,13 +16,10 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+
   int _currentIndex = 0;
   final List<Widget> screens = [
-    HomeScreen(
-      image: '',
-      caption: '',
-      time: DateTime.now(),
-    ), // Pass default values for initial rendering
+    HomeScreen(),
     NotificationScreen(),
     AddScreen(),
     ChatScreen(),

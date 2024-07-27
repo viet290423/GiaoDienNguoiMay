@@ -1,8 +1,18 @@
-import 'package:demo/app/dimensions.dart';
-import 'package:demo/screen/account/setting_screen.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:demo/screen/account/setting_screen.dart';
+import '../friends/friends_screen.dart';
+import '../../app/dimensions.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends StatefulWidget {
+  @override
+  _AccountScreenState createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
+  int friendCount = 0;
+
   final List<String> imagePaths = [
     'assets/images/anh1.jpg',
     'assets/images/labubu1.webp',
@@ -18,21 +28,26 @@ class AccountScreen extends StatelessWidget {
     'assets/images/flowers.png',
   ];
 
-  // Hàm buildColumn với tham số màu sắc cho giá trị
-  Column buildColumn(String label, String value, Color valueColor) {
-    return Column(
-      children: [
-        Text(
-          label,
-          style: TextStyle(fontSize: 20),
-        ),
-        SizedBox(height: 8),
-        Text(
-          value,
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: valueColor),
-        ),
-      ],
-    );
+  @override
+  void initState() {
+    super.initState();
+    _loadFriendCount();
+  }
+
+  Future<void> _loadFriendCount() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? temporaryFriendsJson = prefs.getString('temporary_friends');
+
+    if (temporaryFriendsJson != null && temporaryFriendsJson.isNotEmpty) {
+      final List<dynamic> friendsList = jsonDecode(temporaryFriendsJson);
+      setState(() {
+        friendCount = friendsList.length;
+      });
+    } else {
+      setState(() {
+        friendCount = 0;
+      });
+    }
   }
 
   @override
@@ -52,7 +67,7 @@ class AccountScreen extends StatelessWidget {
                     backgroundImage: AssetImage('assets/images/flowers.png'),
                   ),
                   Text(
-                    'USER NAME',
+                    'labubu',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -73,15 +88,63 @@ class AccountScreen extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Container(
-
               padding: EdgeInsets.all(Dimensions.height10),
-
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  buildColumn('Like', '90', Color(0xFF6D9886)),
-                  buildColumn('Post', '3', Color(0xFF6D9886)),
-                  buildColumn('Friends', '6', Color(0xFF6D9886)),
+                  Column(
+                    children: [
+                      Text('Like', style: TextStyle(fontSize: 20)),
+                      Text(
+                        '90',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF6D9886),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text('Post', style: TextStyle(fontSize: 20)),
+                      Text(
+                        '3',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF6D9886),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FriendsPage()),
+                          ).then((_) {
+                            _loadFriendCount(); // Cập nhật số lượng bạn bè khi trở lại
+                          });
+                        },
+                        child: Column(
+                          children: [
+                            Text('Friends', style: TextStyle(fontSize: 20)),
+                            Text(
+                              '$friendCount',
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF6D9886),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

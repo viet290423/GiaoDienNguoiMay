@@ -1,4 +1,5 @@
 import 'package:demo/app/dimensions.dart';
+import 'package:demo/models/post_model.dart';
 import 'package:demo/screen/home/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +8,14 @@ import 'package:flutter/material.dart';
 
 class UserPostsScreen extends StatelessWidget {
   final String userName;
-  final List<Map<String, dynamic>> posts;
+  final List<Post> posts;
 
-  UserPostsScreen({required this.userName, required this.posts});
+  const UserPostsScreen({super.key, required this.userName, required this.posts});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> userPosts = posts
-        .where((post) => post['name'] == userName)
+    final List<Post> userPosts = posts
+        .where((post) => post.name == userName)
         .toList();
 
     final List<String> imagePaths = [
@@ -33,10 +34,10 @@ class UserPostsScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: Container(
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.white,
+          child: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             child: Stack(

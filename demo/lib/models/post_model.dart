@@ -1,49 +1,65 @@
-class PostModel {
-  final String image;
-  final String caption;
-  final String time;
-  final String avatar;
-  final String name;
+class Post {
+  String image;
+  String avatar;
+  String name;
+  String time;
+  String caption;
   int likes;
-  List<String> comments;
+  int comments;
   bool isFavorite;
 
-  PostModel({
+  Post({
     required this.image,
-    required this.caption,
-    required this.time,
     required this.avatar,
     required this.name,
+    required this.time,
+    required this.caption,
     required this.likes,
     required this.comments,
-    required this.isFavorite,
+    this.isFavorite = false,
   });
 
-  // Method to convert PostModel to a map
-  Map<String, dynamic> toMap() {
+  static List<Post> generatePosts() {
+    return [
+      Post(
+        image: 'assets/images/anh1.jpg',
+        avatar: 'assets/images/flowers.png',
+        name: 'Hoa',
+        time: '2 min ago',
+        caption: 'Guess where I am??',
+        likes: 1200,
+        comments: 1200,
+      ),
+      Post(
+        image: 'assets/images/flowers.png',
+        avatar: 'assets/images/labubu1.webp',
+        name: 'Minh Quan',
+        time: '5 min ago',
+        caption: 'Just chilling here!',
+        likes: 800,
+        comments: 500,
+      ),
+      Post(
+        image: 'assets/images/labubu3.jpg',
+        avatar: 'assets/images/labubu6.webp',
+        name: 'Minh',
+        time: '5 min ago',
+        caption: 'Just chilling here!',
+        likes: 800,
+        comments: 500,
+      ),
+    ];
+  }
+   Map<String, dynamic> toMap() {
     return {
       'image': image,
-      'caption': caption,
-      'time': time,
       'avatar': avatar,
       'name': name,
+      'time': time,
+      'caption': caption,
       'likes': likes,
       'comments': comments,
       'isFavorite': isFavorite,
     };
-  }
-
-  // Factory method to create PostModel from a map
-  factory PostModel.fromMap(Map<String, dynamic> map) {
-    return PostModel(
-      image: map['image'],
-      caption: map['caption'],
-      time: map['time'],
-      avatar: map['avatar'],
-      name: map['name'],
-      likes: map['likes'],
-      comments: List<String>.from(map['comments']),
-      isFavorite: map['isFavorite'],
-    );
   }
 }

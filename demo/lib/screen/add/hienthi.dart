@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:demo/app/dimensions.dart';
+import 'package:demo/screen/home/main_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:demo/models/post_model.dart';
 
 class HienThi extends StatefulWidget {
-  final String image;
-  final String caption;
-  final DateTime time;
+  final Post post;
 
-  const HienThi(
-      {super.key, required this.image,
-      required this.caption,
-      required this.time});
+  const HienThi({super.key, required this.post});
 
   @override
   _HienThiState createState() => _HienThiState();
@@ -36,9 +35,9 @@ class _HienThiState extends State<HienThi> {
 
   void _updateElapsedTime() {
     final now = DateTime.now();
-    final difference = now.difference(widget.time);
+    final postTime = DateTime.parse(widget.post.time);
+    final difference = now.difference(postTime);
 
-    // Cập nhật thời gian đã trôi qua mỗi giây
     if (difference.inSeconds < 60) {
       _elapsedTimeNotifier.value = '${difference.inSeconds} giây trước';
     } else if (difference.inMinutes < 60) {
@@ -58,36 +57,190 @@ class _HienThiState extends State<HienThi> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Hiển Thị Ảnh'),
+        leading: IconButton(
+          icon: Icon(CupertinoIcons.back, size: Dimensions.iconSize16 * 2,),
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => MainScreen()),
+                    (Route<dynamic> route) => false,
+            ); // Quay về trang trước đó
+          },
+        ),
       ),
       body: Center(
+        child: _buildPost(widget.post.toMap(), 0),
+      ),
+    );
+  }
+
+  Widget _buildPost(Map<String, dynamic> post, int index) {
+    return Container(
+      margin: EdgeInsets.only(
+          top: Dimensions.height30,
+          bottom: Dimensions.height45,
+          left: Dimensions.width10,
+          right: Dimensions.width10),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Dimensions.radius30),
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x19000000),
+            spreadRadius: 3,
+            blurRadius: 4,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+            left: Dimensions.width20,
+            top: Dimensions.height20,
+            right: Dimensions.width20,
+            bottom: Dimensions.height10),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.memory(
-              // Chuyển đổi chuỗi hình ảnh base64 thành Uint8List
-              Base64Decoder().convert(widget.image),
-              width: 300,
-              height: 300,
-              fit: BoxFit.cover,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CircleAvatar(
+                  radius: Dimensions.radius20,
+                  backgroundImage: AssetImage(post['avatar']),
+                ),
+                SizedBox(width: Dimensions.height10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: Dimensions.height20,
+                      child: Text(
+                        post['name'],
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: Dimensions.font16,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: Dimensions.height20,
+                      child: ValueListenableBuilder<String>(
+                        valueListenable: _elapsedTimeNotifier,
+                        builder: (context, elapsedTime, child) {
+                          return Text(
+                            elapsedTime,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: Dimensions.font12,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-            SizedBox(height: 20),
-            Text(
-              'Caption: ${widget.caption}',
-              style: TextStyle(fontSize: 18),
-            ),
-            SizedBox(height: 10),
-            ValueListenableBuilder<String>(
-              valueListenable: _elapsedTimeNotifier,
-              builder: (context, elapsedTime, child) {
-                return Text(
-                  ' $elapsedTime',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                );
+            SizedBox(height: Dimensions.height30),
+            GestureDetector(
+              onDoubleTap: () {
+                setState(() {
+                  widget.post.isFavorite = !widget.post.isFavorite;
+                  widget.post.likes += widget.post.isFavorite ? 1 : -1;
+                });
               },
+              child: Container(
+                width: double.infinity,
+                height: Dimensions.popularImgSize,
+                decoration: ShapeDecoration(
+                  image: DecorationImage(
+                    image: MemoryImage(Base64Decoder().convert(post['image'])),
+                    fit: BoxFit.fill,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 313,
+              height: 30,
+              child: Text(
+                post['caption'],
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildLikeButton(index),
+                _buildCommentButton(post['comments']),
+              ],
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildLikeButton(int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          widget.post.isFavorite = !widget.post.isFavorite;
+          widget.post.likes += widget.post.isFavorite ? 1 : -1;
+        });
+      },
+      child: Container(
+        width: 150,
+        height: 40,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              widget.post.isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: widget.post.isFavorite ? Colors.red : Colors.black,
+            ),
+            SizedBox(width: Dimensions.width10 / 2),
+            Text(
+              '${widget.post.likes}',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: Dimensions.font16,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
+  Widget _buildCommentButton(int comments) {
+    return Row(
+      children: [
+        Icon(Icons.comment, color: Colors.grey),
+        SizedBox(width: 5),
+        Text('$comments comments'),
+      ],
     );
   }
 }
