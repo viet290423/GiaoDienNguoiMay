@@ -12,9 +12,9 @@ import 'package:demo/screen/splash/splash_page.dart';
 import 'package:demo/controller/post_controller.dart';
 
 
-// void main() {
-//   runApp(const MyApp());
-// }
+void main() {
+  runApp(const MyApp());
+}
 
 // class MyApp extends StatelessWidget {
 //   const MyApp({super.key});
@@ -32,19 +32,19 @@ import 'package:demo/controller/post_controller.dart';
 // }
 
 
-import 'package:device_preview/device_preview.dart';
+// import 'package:device_preview/device_preview.dart';
 
-Future<void> main() async {
-  // Load .env file
-  await dotenv.load(fileName: ".env");
-
-  runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => MyApp(),
-    ),
-  );
-}
+// Future<void> main() async {
+//   // Load .env file
+//   await dotenv.load(fileName: ".env");
+//
+//   runApp(
+//     DevicePreview(
+//       enabled: !kReleaseMode,
+//       builder: (context) => MyApp(),
+//     ),
+//   );
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -57,8 +57,8 @@ class MyApp extends StatelessWidget {
       ],
       child: GetMaterialApp(
         useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
+        // locale: DevicePreview.locale(context),
+        // builder: DevicePreview.appBuilder,
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
         title: 'Flutter Demo',
