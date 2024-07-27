@@ -56,7 +56,7 @@ class AccountScreen extends StatelessWidget {
                     backgroundImage: AssetImage('assets/images/flowers.png'),
                   ),
                   Text(
-                    'USER NAME',
+                    'labubu',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -81,14 +81,58 @@ class AccountScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  buildColumn('Like', '90', Color(0xFF6D9886), null),
-                  buildColumn('Post', '3', Color(0xFF6D9886), null),
-                  buildColumn('Friends', '6', Color(0xFF6D9886), () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FriendsPage()),
-                    );
-                  }),
+                  Column(
+                    children: [
+                      Text('Like', style: TextStyle(fontSize: 20)),
+                      Text(
+                        '90',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF6D9886),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text('Post', style: TextStyle(fontSize: 20)),
+                      Text(
+                        '3',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF6D9886),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FriendsPage()),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Text('Friends', style: TextStyle(fontSize: 20)),
+                            Text(
+                              '6',
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF6D9886),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
                 ],
               ),
             ),

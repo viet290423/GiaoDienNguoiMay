@@ -126,6 +126,7 @@ class _SettingScreenState extends State<SettingScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
+          backgroundColor: Colors.white, // Đặt nền màu trắng
           title: const Center(
             child: Text(
               'Do you really want to delete your account?',
@@ -173,6 +174,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ],
         );
+
       },
     );
   }
