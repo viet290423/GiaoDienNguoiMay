@@ -1,19 +1,14 @@
 import 'package:demo/screen/add/hienthi.dart';
-import 'package:demo/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:intl/intl.dart';
-import 'hienthi.dart';
 import 'package:demo/models/post_model.dart';
-
-
 
 class SaveAddScreen extends StatefulWidget {
   final String imagePath;
   final IO.Socket? socket;
-  
 
   SaveAddScreen({required this.imagePath, required this.socket});
 
@@ -49,9 +44,20 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
     final bytes = File(widget.imagePath).readAsBytesSync();
     final image = base64Encode(bytes);
     final caption = _captionController.text;
+    final now = DateTime.now();
 
-    widget.socket
-        ?.emit('save_image', {'image': image, 'caption': caption});
+    final newPost = Post(
+      image: image,
+      avatar: '', // Default avatar image path
+      name: 'User Name', // Replace with the actual user's name
+      time: DateFormat('yyyy-MM-dd HH:mm:ss').format(now),
+      caption: caption,
+      likes: 0,
+      comments: 0,
+      isFavorite: false,
+    );
+
+    widget.socket?.emit('save_image', {'image': image, 'caption': caption});
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('Data sent to server')));
 
@@ -59,10 +65,7 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => HienThi(
-            image: image,
-            caption: caption,
-            time: DateTime.now()),
+        builder: (context) => HienThi(post: newPost),
       ),
     );
   }
