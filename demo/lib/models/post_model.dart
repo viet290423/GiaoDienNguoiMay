@@ -31,8 +31,8 @@ class Post {
         comments: 1200,
       ),
       Post(
-        image: 'assets/images/anh1.jpg',
-        avatar: 'assets/images/flowers.png',
+        image: 'assets/images/flowers.png',
+        avatar: 'assets/images/labubu1.webp',
         name: 'Minh Quan',
         time: '5 min ago',
         caption: 'Just chilling here!',
@@ -40,8 +40,8 @@ class Post {
         comments: 500,
       ),
       Post(
-        image: 'assets/images/anh1.jpg',
-        avatar: 'assets/images/flowers.png',
+        image: 'assets/images/labubu3.jpg',
+        avatar: 'assets/images/labubu6.webp',
         name: 'Minh',
         time: '5 min ago',
         caption: 'Just chilling here!',

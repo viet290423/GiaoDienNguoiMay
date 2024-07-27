@@ -384,6 +384,17 @@ Widget build(BuildContext context) {
                     hintText: 'Nhập comment của bạn',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                        width: 2.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: const BorderSide(
+                        color: Colors.black,
+                        width: 2.0,
+                      ),
                     ),
                   ),
                   onTap: () {
