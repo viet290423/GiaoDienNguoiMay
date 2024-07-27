@@ -50,4 +50,16 @@ class Post {
       ),
     ];
   }
+   Map<String, dynamic> toMap() {
+    return {
+      'image': image,
+      'avatar': avatar,
+      'name': name,
+      'time': time,
+      'caption': caption,
+      'likes': likes,
+      'comments': comments,
+      'isFavorite': isFavorite,
+    };
+  }
 }
