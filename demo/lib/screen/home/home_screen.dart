@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:demo/app/dimensions.dart';
+import 'package:demo/controller/post_controller.dart';
 import 'package:demo/screen/account/userposts_screen.dart';
 import 'package:demo/screen/home/comment_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,37 +9,28 @@ import 'package:flutter/material.dart';
 import 'package:demo/screen/add/add_screen.dart';
 import 'package:demo/widgets/comment_widget.dart';
 import 'package:demo/widgets/like_widget.dart';
-import 'package:demo/models/post_model.dart'; // Import model
+import 'package:demo/models/post_model.dart';
+import 'package:provider/provider.dart'; // Import model
 
 class HomeScreen extends StatefulWidget {
-  final String image;
-  final String caption;
-  final DateTime time;
-
-  HomeScreen({
-    required this.image,
-    required this.caption,
-    required this.time,
-  });
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+
 class _HomeScreenState extends State<HomeScreen> {
-  bool isFavorite = false;
   String searchQuery = '';
   TextEditingController searchController = TextEditingController();
 
   final List<Post> posts = Post.generatePosts();
-  // Sử dụng danh sách posts từ model
   List<Post> get filteredPosts {
+    final posts = Provider.of<PostController>(context).posts;
     if (searchQuery.isEmpty) {
       return posts;
     } else {
-      return posts
-          .where((post) => post.name.toLowerCase().contains(searchQuery.toLowerCase()))
-          .toList();
+      return posts.where((post) => post.name.toLowerCase().contains(searchQuery.toLowerCase())).toList();
     }
   }
 
@@ -46,12 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Padding(
-          padding: EdgeInsets.only(left: Dimensions.width30),
+          padding: EdgeInsets.only(left: 30),
           child: Text(
             'FUZZYSNAP',
             style: TextStyle(
               color: Colors.black,
-              fontSize: Dimensions.font20,
+              fontSize: 20,
               fontFamily: 'Montserrat',
               fontWeight: FontWeight.w800,
             ),
@@ -59,15 +53,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: Dimensions.width30),
+            padding: EdgeInsets.only(right: 30),
             child: IconButton(
                 onPressed: () {
                   showSearch(
-                      context: context, delegate: CustomSearch(posts: posts));
+                      context: context, delegate: CustomSearch(posts: Provider.of<PostController>(context, listen: false).posts));
                 },
                 icon: Icon(
                   Icons.search,
-                  size: Dimensions.iconSize24 + 6,
+                  size: 30,
                 )),
           ),
         ],
@@ -76,19 +70,21 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(
-                left: Dimensions.width10,
-                right: Dimensions.width10),
+            margin: EdgeInsets.only(left: 10, right: 10),
             child: Column(
               children: [
-                SizedBox(height: Dimensions.height10),
+                SizedBox(height: 10),
                 Expanded(
-                  child: PageView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: filteredPosts.length,
-                    itemBuilder: (context, index) {
-                      final post = filteredPosts[index];
-                      return _buildPost(post, index);
+                  child: Consumer<PostController>(
+                    builder: (context, postController, child) {
+                      return PageView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: filteredPosts.length,
+                        itemBuilder: (context, index) {
+                          final post = filteredPosts[index];
+                          return _buildPost(post, index);
+                        },
+                      );
                     },
                   ),
                 ),

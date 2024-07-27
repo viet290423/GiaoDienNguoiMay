@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:demo/app/dimensions.dart';
+import 'package:demo/screen/home/main_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/models/post_model.dart';
 
@@ -55,6 +57,16 @@ class _HienThiState extends State<HienThi> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Hiển Thị Ảnh'),
+        leading: IconButton(
+          icon: Icon(CupertinoIcons.back, size: Dimensions.iconSize16 * 2,),
+          onPressed: () {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => MainScreen()),
+                    (Route<dynamic> route) => false,
+            ); // Quay về trang trước đó
+          },
+        ),
       ),
       body: Center(
         child: _buildPost(widget.post.toMap(), 0),
@@ -187,17 +199,40 @@ class _HienThiState extends State<HienThi> {
   }
 
   Widget _buildLikeButton(int index) {
-    return Row(
-      children: [
-        Icon(
-          Icons.thumb_up,
-          color: widget.post.isFavorite ? Colors.red : Colors.grey,
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          widget.post.isFavorite = !widget.post.isFavorite;
+          widget.post.likes += widget.post.isFavorite ? 1 : -1;
+        });
+      },
+      child: Container(
+        width: 150,
+        height: 40,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              widget.post.isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: widget.post.isFavorite ? Colors.red : Colors.black,
+            ),
+            SizedBox(width: Dimensions.width10 / 2),
+            Text(
+              '${widget.post.likes}',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: Dimensions.font16,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         ),
-        SizedBox(width: 5),
-        Text('${widget.post.likes} likes'),
-      ],
+      ),
     );
   }
+
 
   Widget _buildCommentButton(int comments) {
     return Row(

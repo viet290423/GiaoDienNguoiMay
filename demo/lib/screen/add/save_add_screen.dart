@@ -1,16 +1,20 @@
+import 'package:demo/controller/post_controller.dart';
 import 'package:demo/screen/add/hienthi.dart';
+import 'package:demo/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:intl/intl.dart';
 import 'package:demo/models/post_model.dart';
 
+
 class SaveAddScreen extends StatefulWidget {
   final String imagePath;
   final IO.Socket? socket;
 
-  SaveAddScreen({required this.imagePath, required this.socket});
+  SaveAddScreen({required this.imagePath, this.socket});
 
   @override
   _SaveAddScreenState createState() => _SaveAddScreenState();
@@ -36,8 +40,7 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
 
   void _saveData() {
     if (!_isFileExist) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('File không tồn tại!')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('File không tồn tại!')));
       return;
     }
 
@@ -48,8 +51,8 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
 
     final newPost = Post(
       image: image,
-      avatar: '', // Default avatar image path
-      name: 'User Name', // Replace with the actual user's name
+      avatar: '', // Đường dẫn ảnh đại diện mặc định
+      name: 'User Name', // Thay thế bằng tên thực tế của người dùng
       time: DateFormat('yyyy-MM-dd HH:mm:ss').format(now),
       caption: caption,
       likes: 0,
@@ -57,11 +60,10 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
       isFavorite: false,
     );
 
-    widget.socket?.emit('save_image', {'image': image, 'caption': caption});
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Data sent to server')));
+    // Thêm bài đăng mới vào PostController
+    Provider.of<PostController>(context, listen: false).addPostAtTop(newPost);
 
-    // Chuyển sang màn hình hiển thị ảnh và caption
+    // Chuyển sang màn hình hiển thị bài đăng mới
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -81,10 +83,10 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
           children: [
             if (_isFileExist)
               Container(
-                height: 350, // Đặt chiều cao của ảnh
-                width: 350, // Đặt chiều rộng của ảnh
+                height: 350,
+                width: 350,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50), // Bo tròn góc ảnh
+                  borderRadius: BorderRadius.circular(50),
                   image: DecorationImage(
                     image: FileImage(File(widget.imagePath)),
                     fit: BoxFit.cover,
