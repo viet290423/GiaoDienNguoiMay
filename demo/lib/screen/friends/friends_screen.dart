@@ -29,20 +29,7 @@ class _FriendsPageState extends State<FriendsPage> {
     } else {
       // Thiết lập dữ liệu mặc định
       setState(() {
-        friends = [
-          Friend(name: 'John Doe', status: 'Online', profilePictureUrl: 'assets/images/labubu1.webp'),
-          Friend(name: 'Jane Smith', status: 'Offline', profilePictureUrl: 'assets/images/labubu2.webp'),
-          Friend(name: 'John Doe', status: 'Online', profilePictureUrl: 'assets/images/labubu4.webp'),
-          Friend(name: 'Jane Smith', status: 'Offline', profilePictureUrl: 'assets/images/labubu5.webp'),
-          Friend(name: 'John Doe', status: 'Online', profilePictureUrl: 'assets/images/labubu6.webp'),
-          Friend(name: 'Jane Smith', status: 'Offline', profilePictureUrl: 'assets/images/labubu.webp'),
-          Friend(name: 'John Doe', status: 'Online', profilePictureUrl: 'assets/images/labubu1.webp'),
-          Friend(name: 'Jane Smith', status: 'Offline', profilePictureUrl: 'assets/images/labubu2.webp'),
-          Friend(name: 'John Doe', status: 'Online', profilePictureUrl: 'assets/images/labubu4.webp'),
-          Friend(name: 'Jane Smith', status: 'Offline', profilePictureUrl: 'assets/images/labubu5.webp'),
-          Friend(name: 'John Doe', status: 'Online', profilePictureUrl: 'assets/images/labubu6.webp'),
-          Friend(name: 'Jane Smith', status: 'Offline', profilePictureUrl: 'assets/images/labubu.webp'),
-        ];
+        friends = _getInitialFriends();
       });
       // Lưu danh sách bạn bè mặc định vào SharedPreferences
       _saveFriends(); // Đảm bảo rằng phương thức này lưu danh sách bạn bè vào SharedPreferences
@@ -55,9 +42,8 @@ class _FriendsPageState extends State<FriendsPage> {
     await prefs.setString('temporary_friends', friendsJson);
   }
 
-  Future<void> _saveInitialFriends() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String initialFriendsJson = jsonEncode([
+  List<Friend> _getInitialFriends() {
+    return [
       Friend(name: 'John Doe', status: 'Online', profilePictureUrl: 'assets/images/labubu1.webp'),
       Friend(name: 'Jane Smith', status: 'Offline', profilePictureUrl: 'assets/images/labubu2.webp'),
       Friend(name: 'John Doe', status: 'Online', profilePictureUrl: 'assets/images/labubu4.webp'),
@@ -70,14 +56,15 @@ class _FriendsPageState extends State<FriendsPage> {
       Friend(name: 'Jane Smith', status: 'Offline', profilePictureUrl: 'assets/images/labubu5.webp'),
       Friend(name: 'John Doe', status: 'Online', profilePictureUrl: 'assets/images/labubu6.webp'),
       Friend(name: 'Jane Smith', status: 'Offline', profilePictureUrl: 'assets/images/labubu.webp'),
-    ].map((friend) => friend.toJson()).toList());
-    await prefs.setString('initial_friends', initialFriendsJson);
+    ];
   }
 
-  Future<void> _saveTemporaryFriends() async {
+  Future<void> _resetFriends() async {
     final prefs = await SharedPreferences.getInstance();
-    final String temporaryFriendsJson = jsonEncode(friends.map((friend) => friend.toJson()).toList());
-    await prefs.setString('temporary_friends', temporaryFriendsJson);
+    setState(() {
+      friends = _getInitialFriends();
+    });
+    await prefs.setString('temporary_friends', jsonEncode(friends.map((friend) => friend.toJson()).toList()));
   }
 
   void _showDeleteConfirmationDialog(int index) {
@@ -108,7 +95,7 @@ class _FriendsPageState extends State<FriendsPage> {
                 setState(() {
                   // Xóa bạn bè khỏi danh sách hiện tại
                   friends.removeAt(index);
-                  _saveTemporaryFriends(); // Lưu danh sách xóa tạm thời
+                  _saveFriends(); // Lưu danh sách xóa tạm thời
                 });
                 Navigator.of(context).pop();
               },
@@ -136,9 +123,9 @@ class _FriendsPageState extends State<FriendsPage> {
         elevation: 0, // Bỏ bóng dưới AppBar
         actions: [
           IconButton(
-            icon: Icon(Icons.add, color: Colors.black), // Biểu tượng màu đen
+            icon: Icon(Icons.restore, color: Colors.black), // Biểu tượng màu đen
             onPressed: () {
-              // Logic to add friends
+              _resetFriends(); // Reset friends list
             },
           ),
         ],
