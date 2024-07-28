@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'dart:convert';
+import 'dart:io';
 import 'save_add_screen.dart';
 
 class AddScreen extends StatefulWidget {
@@ -12,6 +14,8 @@ class _AddScreenState extends State<AddScreen> {
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
   IO.Socket? socket;
+  late List<CameraDescription> cameras;
+  bool isFrontCamera = true;
 
   @override
   void initState() {
@@ -21,7 +25,7 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   void _initializeSocket() {
-    socket = IO.io('https://api-socket-io.onrender.com',
+    socket = IO.io('http://192.168.42.24:8080',
         IO.OptionBuilder().setTransports(['websocket']).build());
     socket?.onConnect((_) => print('Connected to Socket.IO server'));
     socket?.onDisconnect((_) => print('Disconnected from Socket.IO server'));
@@ -29,12 +33,10 @@ class _AddScreenState extends State<AddScreen> {
 
   Future<void> _initializeCamera() async {
     try {
-      final cameras = await availableCameras();
+      cameras = await availableCameras();
       if (cameras.isEmpty) {
-        print('No cameras available');
-        return;
+        throw Exception('No cameras found');
       }
-
       final firstCamera = cameras.first;
 
       _controller = CameraController(
@@ -43,14 +45,55 @@ class _AddScreenState extends State<AddScreen> {
       );
 
       _initializeControllerFuture = _controller!.initialize();
-      await _initializeControllerFuture;
-      
-      // Ensure setState is called only if the widget is still mounted
-      if (mounted) {
-        setState(() {});
-      }
+      setState(() {});
     } catch (e) {
       print('Error initializing camera: $e');
+    }
+  }
+
+  void _switchCamera() async {
+    if (_controller != null && cameras.isNotEmpty) {
+      final lensDirection = _controller!.description.lensDirection;
+      CameraDescription newDescription;
+      if (lensDirection == CameraLensDirection.front) {
+        newDescription = cameras.firstWhere(
+          (description) =>
+              description.lensDirection == CameraLensDirection.back,
+        );
+        isFrontCamera = false;
+      } else {
+        newDescription = cameras.firstWhere(
+          (description) =>
+              description.lensDirection == CameraLensDirection.front,
+        );
+        isFrontCamera = true;
+      }
+
+      final temporaryController = CameraController(
+        newDescription,
+        ResolutionPreset.high,
+      );
+
+      await temporaryController.initialize();
+
+      setState(() {
+        _controller = temporaryController;
+        _initializeControllerFuture = _controller!.initialize();
+      });
+    }
+  }
+
+  void _toggleFlash() async {
+    if (_controller != null) {
+      FlashMode currentFlashMode = _controller!.value.flashMode;
+      FlashMode newFlashMode;
+      if (currentFlashMode == FlashMode.off) {
+        newFlashMode = FlashMode.torch;
+      } else {
+        newFlashMode = FlashMode.off;
+      }
+      await _controller!.setFlashMode(newFlashMode);
+      setState(() {});
     }
   }
 
@@ -84,21 +127,28 @@ class _AddScreenState extends State<AddScreen> {
                     future: _initializeControllerFuture,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
-                        // Check if the controller is initialized
                         if (_controller != null &&
                             _controller!.value.isInitialized) {
                           return Container(
-                            width: 350, // Width of camera preview
-                            height: 350, // Height of camera preview
+                            width: 350,
+                            height: 350,
                             decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.circular(50), // Rounded corners
+                              borderRadius: BorderRadius.circular(50),
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(50),
                               child: AspectRatio(
                                 aspectRatio: _controller!.value.aspectRatio,
-                                child: CameraPreview(_controller!),
+                                child: FittedBox(
+                                  fit: BoxFit.cover,
+                                  child: SizedBox(
+                                    width:
+                                        _controller!.value.previewSize!.width,
+                                    height:
+                                        _controller!.value.previewSize!.height,
+                                    child: CameraPreview(_controller!),
+                                  ),
+                                ),
                               ),
                             ),
                           );
@@ -113,7 +163,7 @@ class _AddScreenState extends State<AddScreen> {
                       }
                     },
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 60),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -127,7 +177,7 @@ class _AddScreenState extends State<AddScreen> {
                         child: IconButton(
                           icon: const Icon(Icons.autorenew,
                               color: Color(0xFF4E7360)),
-                          onPressed: () {},
+                          onPressed: _switchCamera,
                           iconSize: 30,
                         ),
                       ),
@@ -177,7 +227,7 @@ class _AddScreenState extends State<AddScreen> {
                         child: IconButton(
                           icon: const Icon(Icons.flash_on,
                               color: Color(0xFF4E7360)),
-                          onPressed: () {},
+                          onPressed: _toggleFlash,
                           iconSize: 30,
                         ),
                       ),
