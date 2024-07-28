@@ -61,7 +61,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding: const EdgeInsets.all(16.0),
             child: TextField(
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: Icon(Icons.search, color: Colors.black,),
                 hintText: 'Search...',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -85,7 +85,12 @@ class _ChatScreenState extends State<ChatScreen> {
                           radius: 20,
                           backgroundImage: AssetImage('assets/images/chatbot_logo.png'), // Đường dẫn tới logo chatbot
                         ),
-                        title: Text('AI Chat'),
+                        title: Text(
+                          'AI Chat',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                         subtitle: Text('Start chatting with AI'),
                         trailing: Text(''),
                         onTap: () {
@@ -112,7 +117,12 @@ class _ChatScreenState extends State<ChatScreen> {
                           radius: 20,
                           backgroundImage: AssetImage('assets/images/flowers.png'),
                         ),
-                        title: Text('Hoa'),
+                        title: Text(
+                          'Hoa',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                         subtitle: Text(lastMessageHoa.isNotEmpty ? lastMessageHoa : 'What your name'),
                         trailing: Text('16:20'),
                         onTap: () {
@@ -141,7 +151,12 @@ class _ChatScreenState extends State<ChatScreen> {
                           radius: 20,
                           backgroundImage: AssetImage('assets/images/labubu5.webp'),
                         ),
-                        title: Text('Phúc Thành'),
+                        title: Text(
+                          'Phúc Thành',
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                         subtitle: Text(lastMessagePhucThanh.isNotEmpty ? lastMessagePhucThanh : 'How can I help you today'),
                         trailing: Text('17:35'),
                         onTap: () {

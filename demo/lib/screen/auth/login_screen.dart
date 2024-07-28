@@ -63,6 +63,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           SizedBox(height: Dimensions.height45 * 2),
                           TextFormField(
+                            style: const TextStyle(
+                              color: Colors.black, // Set text color to black
+                            ),
                             decoration: InputDecoration(
                               labelText: 'Phone number',
                               labelStyle: const TextStyle(
@@ -111,6 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: Dimensions.height30),
                           TextFormField(
                             obscureText: true,
+                            style: const TextStyle(
+                              color: Colors.black, // Set text color to black
+                            ),
                             decoration: InputDecoration(
                               labelText: 'Password',
                               labelStyle: const TextStyle(
@@ -183,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                       builder: (context) => MainScreen()),
-                                  (Route<dynamic> route) => false,
+                                      (Route<dynamic> route) => false,
                                 );
                               }
                             },

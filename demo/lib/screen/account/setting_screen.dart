@@ -60,8 +60,11 @@ class _SettingScreenState extends State<SettingScreen> {
             buildSettingSection(
               title: 'General',
               children: [
-                buildSettingItem('Language',
-                    trailing: const Text('English'), onTap: () {}),
+                buildSettingItem(
+                  'Language',
+                  trailing: const Text('English', style: TextStyle(color: Colors.black)),
+                  onTap: () {},
+                ),
                 buildSettingItem(
                   'Dark Mode',
                   trailing: Switch(
@@ -100,13 +103,16 @@ class _SettingScreenState extends State<SettingScreen> {
             buildSettingSection(
               title: 'Red Zone',
               children: [
-                buildSettingItem('Log out', trailing: const Icon(Icons.logout),
-                    onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SplashScreen()),
-                  );
-                }),
+                buildSettingItem(
+                  'Log out',
+                  trailing: const Icon(Icons.logout, color: Colors.black),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SplashScreen()),
+                    );
+                  },
+                ),
                 buildSettingItem(
                   'Delete account',
                   textColor: Colors.red,
@@ -134,7 +140,7 @@ class _SettingScreenState extends State<SettingScreen> {
           title: const Center(
             child: Text(
               'Do you really want to delete your account?',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
               textAlign: TextAlign.center,
             ),
           ),

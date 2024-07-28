@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icon(
                   Icons.search,
                   size: 30,
+                  color: Colors.black,
                 )),
           ),
         ],
