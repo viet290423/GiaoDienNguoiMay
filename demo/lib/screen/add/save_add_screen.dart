@@ -9,7 +9,6 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:intl/intl.dart';
 import 'package:demo/models/post_model.dart';
 
-
 class SaveAddScreen extends StatefulWidget {
   final String imagePath;
   final IO.Socket? socket;
@@ -30,6 +29,7 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
     _checkFileExist();
   }
 
+  // Kiểm tra tệp có tồn tại hay không
   void _checkFileExist() async {
     final file = File(widget.imagePath);
     bool isExist = await file.exists();
@@ -38,9 +38,11 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
     });
   }
 
+  // Lưu dữ liệu và chuyển sang màn hình hiển thị bài đăng mới
   void _saveData() {
     if (!_isFileExist) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('File không tồn tại!')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('File không tồn tại!')));
       return;
     }
 
