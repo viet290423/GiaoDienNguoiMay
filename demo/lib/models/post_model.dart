@@ -52,7 +52,7 @@ class Post {
         avatar: 'assets/images/labubu6.webp',
         name: 'Minh',
         time: '5 min ago',
-        caption: 'Just chilling here!',
+        caption: 'Labutuuuuuuu ahuhuu!',
         likes: 800,
         comments: 500,
       ),

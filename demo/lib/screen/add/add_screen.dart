@@ -1,5 +1,4 @@
 import 'package:camera/camera.dart';
-import 'package:demo/app/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'save_add_screen.dart';
@@ -29,16 +28,30 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   Future<void> _initializeCamera() async {
-    final cameras = await availableCameras();
-    final firstCamera = cameras.first;
+    try {
+      final cameras = await availableCameras();
+      if (cameras.isEmpty) {
+        print('No cameras available');
+        return;
+      }
 
-    _controller = CameraController(
-      firstCamera,
-      ResolutionPreset.high,
-    );
+      final firstCamera = cameras.first;
 
-    _initializeControllerFuture = _controller!.initialize();
-    setState(() {});
+      _controller = CameraController(
+        firstCamera,
+        ResolutionPreset.high,
+      );
+
+      _initializeControllerFuture = _controller!.initialize();
+      await _initializeControllerFuture;
+      
+      // Ensure setState is called only if the widget is still mounted
+      if (mounted) {
+        setState(() {});
+      }
+    } catch (e) {
+      print('Error initializing camera: $e');
+    }
   }
 
   @override
@@ -93,12 +106,14 @@ class _AddScreenState extends State<AddScreen> {
                           return const Center(
                               child: Text('Camera is not initialized'));
                         }
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
                       } else {
                         return const Center(child: CircularProgressIndicator());
                       }
                     },
                   ),
-                  SizedBox(height: Dimensions.height30 * 2),
+                  SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -121,17 +136,19 @@ class _AddScreenState extends State<AddScreen> {
                         onTap: () async {
                           try {
                             await _initializeControllerFuture;
-                            final image = await _controller!.takePicture();
-                            if (!mounted) return;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SaveAddScreen(
-                                  imagePath: image.path,
-                                  socket: socket,
+                            if (_controller != null) {
+                              final image = await _controller!.takePicture();
+                              if (!mounted) return;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SaveAddScreen(
+                                    imagePath: image.path,
+                                    socket: socket,
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           } catch (e) {
                             print(e);
                           }
@@ -166,7 +183,6 @@ class _AddScreenState extends State<AddScreen> {
                       ),
                     ],
                   ),
-                  // const SizedBox(height: 20),
                 ],
               ),
             ),

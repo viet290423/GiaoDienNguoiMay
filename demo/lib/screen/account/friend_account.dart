@@ -4,19 +4,16 @@ import 'package:demo/screen/home/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-
-class UserPostsScreen extends StatelessWidget {
+class FriendAccount extends StatelessWidget {
   final String userName;
   final List<Post> posts;
 
-  const UserPostsScreen({super.key, required this.userName, required this.posts});
+  const FriendAccount({super.key, required this.userName, required this.posts});
 
   @override
   Widget build(BuildContext context) {
-    final List<Post> userPosts = posts
-        .where((post) => post.name == userName)
-        .toList();
+    final List<Post> userPosts =
+        posts.where((post) => post.name == userName).toList();
 
     final List<String> imagePaths = [
       'assets/images/labubu.webp',
@@ -70,7 +67,7 @@ class UserPostsScreen extends StatelessWidget {
                                   Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                         builder: (context) => MainScreen()),
-                                        (Route<dynamic> route) => false,
+                                    (Route<dynamic> route) => false,
                                   );
                                 },
                               ),
@@ -104,7 +101,8 @@ class UserPostsScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20), // Add some space before the next section
+                    const SizedBox(
+                        height: 20), // Add some space before the next section
                   ],
                 ),
                 Positioned(
@@ -140,8 +138,8 @@ class UserPostsScreen extends StatelessWidget {
                                   const SizedBox(height: 4),
                                   const Text(
                                     'Description',
-                                    style:
-                                    TextStyle(fontSize: 16, color: Colors.grey),
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.grey),
                                   ),
                                 ],
                               ),
@@ -203,7 +201,8 @@ class UserPostsScreen extends StatelessWidget {
                               children: [
                                 Column(
                                   children: [
-                                    Text('Like', style: TextStyle(fontSize: 20)),
+                                    Text('Like',
+                                        style: TextStyle(fontSize: 20)),
                                     Text(
                                       '90',
                                       style: TextStyle(
@@ -216,7 +215,8 @@ class UserPostsScreen extends StatelessWidget {
                                 ),
                                 Column(
                                   children: [
-                                    Text('Post', style: TextStyle(fontSize: 20)),
+                                    Text('Post',
+                                        style: TextStyle(fontSize: 20)),
                                     Text(
                                       '3',
                                       style: TextStyle(
@@ -229,7 +229,8 @@ class UserPostsScreen extends StatelessWidget {
                                 ),
                                 Column(
                                   children: [
-                                    Text('Friends', style: TextStyle(fontSize: 20)),
+                                    Text('Friends',
+                                        style: TextStyle(fontSize: 20)),
                                     Text(
                                       '6',
                                       style: TextStyle(
@@ -255,7 +256,7 @@ class UserPostsScreen extends StatelessWidget {
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: imagePaths.length,
                                 gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
                                   mainAxisSpacing: 4,
                                   crossAxisSpacing: 4,

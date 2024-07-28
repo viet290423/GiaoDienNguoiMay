@@ -1,4 +1,5 @@
 import 'package:demo/models/post_model.dart';
+import 'package:demo/widgets/post_time_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -39,15 +40,8 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
-  // final Map<String, dynamic> infor = {
-  //   'name': 'Thảo Nguyên',
-  //   'pic': 'assets/images/anh1.jpg',
-  //   'like': '1,2k',
-  //   'comment': '1,2k',
-  //   'isFavorite': false,
-  //   'time': '2 min ago',
-  //   'avatar': 'assets/images/flowers.png',
-  // };
+
+  
   final List<Map<String, String>> comments = [
     {
       'name': 'Khánh',
@@ -232,18 +226,20 @@ Widget build(BuildContext context) {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: Dimensions.height20 + 2,
-                  child: Text(
-                    widget.time,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: Dimensions.font12,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
+                widget.decodedImage != null
+                        ? PostTimeWidget(post: widget.posts.firstWhere((post) => post.name == widget.userName && post.time == widget.time))
+                        : SizedBox(
+                            height: Dimensions.height20,
+                            child: Text(
+                              widget.time,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: Dimensions.font12,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
               ],
             ),
           ],

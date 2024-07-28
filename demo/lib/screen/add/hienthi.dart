@@ -55,7 +55,15 @@ class _HienThiState extends State<HienThi> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hiển Thị Ảnh'),
+        title: Text(
+          'Post successful',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: Dimensions.font20,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w800,
+          ),
+        ),
         leading: IconButton(
           icon: Icon(
             CupertinoIcons.back,
@@ -83,6 +91,7 @@ class _HienThiState extends State<HienThi> {
           left: Dimensions.width10,
           right: Dimensions.width10),
       width: double.infinity,
+      height: 600,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Dimensions.radius30),
         color: Colors.white,

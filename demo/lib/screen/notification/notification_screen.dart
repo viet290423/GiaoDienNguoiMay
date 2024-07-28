@@ -1,4 +1,5 @@
 import 'package:demo/app/dimensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/widgets/app_bar_widget.dart';
 
@@ -10,14 +11,16 @@ class NotificationScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar:
-          const AppBarWidget(icon: Icons.notifications, title: "Notification"),
+          const AppBarWidget(icon: CupertinoIcons.bell, title: "Notification"),
       body: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimensions.width15, vertical: Dimensions.height15),
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.width15,
+                    vertical: Dimensions.height15),
                 child: Text(
                   'Request',
                   style: TextStyle(
@@ -45,7 +48,7 @@ class NotificationScreen extends StatelessWidget {
                           backgroundColor: Colors.white,
                           side: const BorderSide(color: Colors.black),
                         ),
-                        child:const Text(
+                        child: const Text(
                           'Confirm',
                         ),
                       ),

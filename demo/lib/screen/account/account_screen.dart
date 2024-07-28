@@ -62,11 +62,11 @@ class _AccountScreenState extends State<AccountScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 45,
                     backgroundImage: AssetImage('assets/images/flowers.png'),
                   ),
-                  Text(
+                  const Text(
                     'labubu',
                     style: TextStyle(
                       fontSize: 30,
@@ -74,25 +74,26 @@ class _AccountScreenState extends State<AccountScreen> {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.settings),
+                    icon: const Icon(Icons.settings),
                     iconSize: 40,
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SettingScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => SettingScreen()),
                       );
                     },
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
               padding: EdgeInsets.all(Dimensions.height10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(
+                  const Column(
                     children: [
                       Text('Like', style: TextStyle(fontSize: 20)),
                       Text(
@@ -105,7 +106,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ],
                   ),
-                  Column(
+                  const Column(
                     children: [
                       Text('Post', style: TextStyle(fontSize: 20)),
                       Text(
@@ -124,17 +125,19 @@ class _AccountScreenState extends State<AccountScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => FriendsPage()),
+                            MaterialPageRoute(
+                                builder: (context) => FriendsPage()),
                           ).then((_) {
                             _loadFriendCount(); // Cập nhật số lượng bạn bè khi trở lại
                           });
                         },
                         child: Column(
                           children: [
-                            Text('Friends', style: TextStyle(fontSize: 20)),
+                            const Text('Friends',
+                                style: TextStyle(fontSize: 20)),
                             Text(
                               '$friendCount',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF6D9886),
@@ -148,13 +151,13 @@ class _AccountScreenState extends State<AccountScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: GridView.count(
                 crossAxisCount: 3,
                 children: List.generate(imagePaths.length, (index) {
                   return Container(
-                    margin: EdgeInsets.all(4),
+                    margin: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(10),

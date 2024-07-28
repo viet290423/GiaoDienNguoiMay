@@ -1,3 +1,4 @@
+import 'package:demo/app/dimensions.dart';
 import 'package:demo/controller/post_controller.dart';
 import 'package:demo/screen/add/hienthi.dart';
 import 'package:demo/screen/home/home_screen.dart';
@@ -8,7 +9,6 @@ import 'dart:convert';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:intl/intl.dart';
 import 'package:demo/models/post_model.dart';
-
 
 class SaveAddScreen extends StatefulWidget {
   final String imagePath;
@@ -40,7 +40,8 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
 
   void _saveData() {
     if (!_isFileExist) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('File không tồn tại!')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('File không tồn tại!')));
       return;
     }
 
@@ -76,7 +77,15 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lưu Ảnh'),
+        title: Text(
+          'Add a caption',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: Dimensions.font20,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w800,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -101,12 +110,54 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
                 controller: _captionController,
                 decoration: InputDecoration(
                   labelText: 'Caption',
+                  labelStyle: const TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w500,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xFFF2E7D5),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: const BorderSide(
+                      color: Colors.black,
+                      width: 2.0,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: const BorderSide(
+                      color: Colors.black,
+                      width: 2.0,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: const BorderSide(
+                      color: Colors.black,
+                      width: 2.0,
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 18.0, horizontal: 16.0),
                 ),
               ),
             ),
             ElevatedButton(
               onPressed: _saveData,
-              child: Text('Đăng Ảnh'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              child: Text(
+                'Đăng Ảnh',
+                style: TextStyle(
+                    fontSize: 16, color: Color.fromARGB(255, 255, 255, 255)),
+              ),
             ),
           ],
         ),

@@ -4,8 +4,9 @@ import 'dart:typed_data';
 import 'package:demo/app/dimensions.dart';
 import 'package:demo/controller/post_controller.dart';
 import 'package:demo/models/post_model.dart';
-import 'package:demo/screen/account/userposts_screen.dart';
+import 'package:demo/screen/account/friend_account.dart';
 import 'package:demo/screen/home/comment_screen.dart';
+import 'package:demo/widgets/post_time_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/screen/add/add_screen.dart';
@@ -38,8 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         backgroundColor: Colors.white,
-        title: Padding(
+        title: const Padding(
           padding: EdgeInsets.only(left: 30),
           child: Text(
             'FUZZYSNAP',
@@ -153,18 +155,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: Dimensions.height20,
-                      child: Text(
-                        post.time,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: Dimensions.font12,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
+                    post.decodedImage != null
+                        ? PostTimeWidget(post: post)
+                        : SizedBox(
+                            height: Dimensions.height20,
+                            child: Text(
+                              post.time,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: Dimensions.font12,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
                   ],
                 ),
               ],
@@ -355,7 +359,7 @@ class CustomSearch extends SearchDelegate {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => UserPostsScreen(
+                builder: (context) => FriendAccount(
                   userName: post.name,
                   posts: posts,
                 ),
@@ -386,7 +390,7 @@ class CustomSearch extends SearchDelegate {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => UserPostsScreen(
+                builder: (context) => FriendAccount(
                   userName: post.name,
                   posts: posts,
                 ),
