@@ -69,6 +69,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   Text(
                     'labubu',
                     style: TextStyle(
+                      color: Colors.black,
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
                     ),
@@ -76,6 +77,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   IconButton(
                     icon: Icon(Icons.settings),
                     iconSize: 40,
+                    color: Colors.black,
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -94,7 +96,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 children: [
                   Column(
                     children: [
-                      Text('Like', style: TextStyle(fontSize: 20)),
+                      Text('Like', style: TextStyle(color: Colors.black, fontSize: 20)),
                       Text(
                         '90',
                         style: TextStyle(
@@ -107,7 +109,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                   Column(
                     children: [
-                      Text('Post', style: TextStyle(fontSize: 20)),
+                      Text('Post', style: TextStyle(color: Colors.black,fontSize: 20)),
                       Text(
                         '3',
                         style: TextStyle(
@@ -131,7 +133,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         },
                         child: Column(
                           children: [
-                            Text('Friends', style: TextStyle(fontSize: 20)),
+                            Text('Friends', style: TextStyle(color: Colors.black, fontSize: 20)),
                             Text(
                               '$friendCount',
                               style: TextStyle(

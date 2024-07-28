@@ -82,6 +82,7 @@ class UserPostsScreen extends StatelessWidget {
                                     Icon(
                                       CupertinoIcons.person,
                                       size: Dimensions.iconSize24 + 2,
+                                      color: Colors.black,
                                     ),
                                     SizedBox(
                                       width: Dimensions.width10,
@@ -92,6 +93,7 @@ class UserPostsScreen extends StatelessWidget {
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w600,
                                         fontSize: Dimensions.font26,
+                                        color: Colors.black,
                                       ),
                                     )
                                   ],
@@ -203,7 +205,7 @@ class UserPostsScreen extends StatelessWidget {
                               children: [
                                 Column(
                                   children: [
-                                    Text('Like', style: TextStyle(fontSize: 20)),
+                                    Text('Like', style: TextStyle(fontSize: 20, color: Colors.black)),
                                     Text(
                                       '90',
                                       style: TextStyle(
@@ -216,7 +218,7 @@ class UserPostsScreen extends StatelessWidget {
                                 ),
                                 Column(
                                   children: [
-                                    Text('Post', style: TextStyle(fontSize: 20)),
+                                    Text('Post', style: TextStyle(fontSize: 20, color: Colors.black)),
                                     Text(
                                       '3',
                                       style: TextStyle(
@@ -229,7 +231,7 @@ class UserPostsScreen extends StatelessWidget {
                                 ),
                                 Column(
                                   children: [
-                                    Text('Friends', style: TextStyle(fontSize: 20)),
+                                    Text('Friends', style: TextStyle(fontSize: 20, color: Colors.black)),
                                     Text(
                                       '6',
                                       style: TextStyle(

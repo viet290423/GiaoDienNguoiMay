@@ -23,6 +23,7 @@ class NotificationScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -31,7 +32,13 @@ class NotificationScreen extends StatelessWidget {
                   backgroundImage: AssetImage('assets/images/flowers.png'),
                   radius: 20,
                 ),
-                title: const Text('Lucas had sent you a Friend Request'),
+                title: const Text(
+                  'Lucas had sent you a Friend Request',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+
                 subtitle: Padding(
                   padding: EdgeInsets.only(top: Dimensions.height10),
                   child: Row(
@@ -71,6 +78,7 @@ class NotificationScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -79,8 +87,18 @@ class NotificationScreen extends StatelessWidget {
                   backgroundImage: AssetImage('assets/images/flowers.png'),
                   radius: 20,
                 ),
-                title: Text('Phúc has post a new post'),
-                subtitle: Text('10p'),
+                title: Text(
+                  'Phúc has posted a new post',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+                subtitle: Text(
+                  '10p',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
               ),
               const Divider(),
               const ListTile(
@@ -88,8 +106,19 @@ class NotificationScreen extends StatelessWidget {
                   backgroundImage: AssetImage('assets/images/flowers.png'),
                   radius: 20,
                 ),
-                title: Text('Phúc has comment your post'),
-                subtitle: Text('10p'),
+                title: Text(
+                  'Phúc has commented on your post',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
+
+                subtitle: Text(
+                  '10p',
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ],
           ),
