@@ -13,7 +13,7 @@ class FriendAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Post> userPosts =
-        posts.where((post) => post.name == userName).toList();
+    posts.where((post) => post.name == userName).toList();
 
     final List<String> imagePaths = [
       'assets/images/labubu.webp',
@@ -63,16 +63,14 @@ class FriendAccount extends StatelessWidget {
                                   size: Dimensions.iconSize24,
                                 ),
                                 onPressed: () {
-                                  // Navigator.of(context).pop();
                                   Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                         builder: (context) => MainScreen()),
-                                    (Route<dynamic> route) => false,
+                                        (Route<dynamic> route) => false,
                                   );
                                 },
                               ),
                               const Spacer(),
-                              SizedBox(height: 75),
                               Container(
                                 child: Row(
                                   children: [
@@ -104,7 +102,7 @@ class FriendAccount extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
-                        height: 20), // Add some space before the next section
+                        height: 20),
                   ],
                 ),
                 Positioned(
@@ -145,49 +143,61 @@ class FriendAccount extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      foregroundColor: Colors.white,
-                                      backgroundColor: Colors.black,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Flexible(
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          backgroundColor: Colors.black,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 10),
+                                        ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Row(
+                                            children: const [
+                                              Icon(Icons.chat, color: Colors.white),
+                                              SizedBox(width: 5),
+                                              Text('Chatting'),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16, vertical: 10),
                                     ),
-                                    child: const Row(
-                                      children: [
-                                        Icon(Icons.chat, color: Colors.white),
-                                        SizedBox(width: 5),
-                                        Text('Chatting'),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      foregroundColor: Colors.black,
-                                      backgroundColor: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
+                                    const SizedBox(width: 10),
+                                    Flexible(
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                          foregroundColor: Colors.black,
+                                          backgroundColor: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 10),
+                                        ),
+                                        child: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          child: Row(
+                                            children: const [
+                                              Icon(Icons.person_remove, color: Colors.black),
+                                              SizedBox(width: 5),
+                                              Text('Unfriend'),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16, vertical: 10),
                                     ),
-                                    child: const Row(
-                                      children: [
-                                        Icon(Icons.person_remove,
-                                            color: Colors.black),
-                                        SizedBox(width: 5),
-                                        Text('Unfriend'),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -254,8 +264,7 @@ class FriendAccount extends StatelessWidget {
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: imagePaths.length,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 3,
                                   mainAxisSpacing: 4,
                                   crossAxisSpacing: 4,

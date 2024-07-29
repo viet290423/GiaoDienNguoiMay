@@ -60,7 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(height: 30),
                           TextFormField(
                             decoration: InputDecoration(
-                              labelText: 'Phone number',
+                              labelText: 'Username',
                               labelStyle: const TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w500,
@@ -99,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please input your phone number';
+                                return 'Please input your username';
                               }
                               return null;
                             },
