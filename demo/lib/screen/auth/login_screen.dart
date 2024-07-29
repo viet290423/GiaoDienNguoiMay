@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? phoneNumber;
+  String? userName;
   String? password;
 
   Future<void> saveUsername(String username) async {
@@ -107,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                phoneNumber = value;
+                                userName = value;
                               });
                             },
                             validator: (value) {
@@ -191,12 +191,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                await saveUsername(phoneNumber!);
+                                await saveUsername(userName!);
                                 // Handle sign in
                                 Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                       builder: (context) => MainScreen()),
-                                      (Route<dynamic> route) => false,
+                                  (Route<dynamic> route) => false,
                                 );
                               }
                             },
@@ -222,8 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            SignUpScreen()));
+                                        builder: (context) => SignUpScreen()));
                               },
                               child: const Text(
                                 'Create new account',

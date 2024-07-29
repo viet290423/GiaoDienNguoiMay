@@ -4,6 +4,7 @@ import 'package:demo/screen/add/hienthi.dart';
 import 'package:demo/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -21,6 +22,7 @@ class SaveAddScreen extends StatefulWidget {
 }
 
 class _SaveAddScreenState extends State<SaveAddScreen> {
+  String username = '';
   TextEditingController _captionController = TextEditingController();
   bool _isFileExist = false;
 
@@ -28,6 +30,14 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
   void initState() {
     super.initState();
     _checkFileExist();
+    _loadUsername();
+  }
+
+  Future<void> _loadUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString('username') ?? 'Username';
+    });
   }
 
   // Kiểm tra tệp có tồn tại hay không
@@ -54,8 +64,8 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
 
     final newPost = Post(
       image: image,
-      avatar: '', // Đường dẫn ảnh đại diện mặc định
-      name: 'User Name', // Thay thế bằng tên thực tế của người dùng
+      avatar: 'assets/images/flowers.png', // Đường dẫn ảnh đại diện mặc định
+      name: username, // Thay thế bằng tên thực tế của người dùng
       time: DateFormat('yyyy-MM-dd HH:mm:ss').format(now),
       caption: caption,
       likes: 0,
@@ -67,8 +77,8 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
     widget.socket?.emit('save_image', {
       'image': image,
       'caption': caption,
-      'avatar': '', // Đường dẫn ảnh đại diện mặc định
-      'name': 'User Name', // Thay thế bằng tên thực tế của người dùng
+      'avatar': 'assets/images/flowers.png', // Đường dẫn ảnh đại diện mặc định
+      'name': username, // Thay thế bằng tên thực tế của người dùng
       'likes': 0,
       'comments': [],
       'isFavorite': false,
