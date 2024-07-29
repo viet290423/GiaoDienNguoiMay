@@ -139,12 +139,12 @@ class _AddScreenState extends State<AddScreen> {
                               child: AspectRatio(
                                 aspectRatio: _controller!.value.aspectRatio,
                                 child: FittedBox(
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
                                   child: SizedBox(
-                                    width: _controller!
-                                        .value.previewSize!.width,
-                                    height: _controller!
-                                        .value.previewSize!.height,
+                                    width:
+                                        _controller!.value.previewSize!.width,
+                                    height:
+                                        _controller!.value.previewSize!.height,
                                     child: CameraPreview(_controller!),
                                   ),
                                 ),

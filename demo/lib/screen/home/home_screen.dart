@@ -10,10 +10,12 @@ import 'package:demo/widgets/post_time_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:demo/screen/add/add_screen.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int? startingIndex;
+  const HomeScreen({super.key, this.startingIndex});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -73,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Container(
@@ -91,6 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           final post = filteredPosts[index];
                           return _buildPost(post, index);
                         },
+                        controller: PageController(
+                          initialPage: widget.startingIndex ?? 0,
+                        ),
                       );
                     },
                   ),
@@ -215,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            SizedBox(height: Dimensions.height45 + 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

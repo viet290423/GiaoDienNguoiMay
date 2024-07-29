@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:demo/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:demo/controller/post_controller.dart';
@@ -157,31 +158,45 @@ class _AccountScreenState extends State<AccountScreen> {
                     crossAxisCount: 3,
                     children:
                         List.generate(postController.posts.length, (index) {
-                      return Container(
-                        margin: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ClipRRect(
+                      final post = postController.posts[index];
+                      return GestureDetector(
+                        onTap: () {
+                          // Handle tap event here
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(
+                                startingIndex:
+                                    index, // Pass the index to HomeScreen
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
                             borderRadius: BorderRadius.circular(10),
-                            child:
-                                postController.posts[index].decodedImage != null
-                                    ? Image(
-                                        image: postController
-                                            .posts[index].decodedImage!,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : Image.asset(
-                                        postController.posts[index].image,
-                                        fit: BoxFit.cover,
-                                      )),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: post.decodedImage != null
+                                ? Image(
+                                    image: post.decodedImage!,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    post.image,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                        ),
                       );
                     }),
                   );
                 },
               ),
-            ),
+            )
           ],
         ),
       ),
