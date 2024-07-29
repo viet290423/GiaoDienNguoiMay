@@ -63,6 +63,17 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
       isFavorite: false,
     );
 
+    // Gửi dữ liệu hình ảnh và chú thích qua socket
+    widget.socket?.emit('save_image', {
+      'image': image,
+      'caption': caption,
+      'avatar': '', // Đường dẫn ảnh đại diện mặc định
+      'name': 'User Name', // Thay thế bằng tên thực tế của người dùng
+      'likes': 0,
+      'comments': [],
+      'isFavorite': false,
+    });
+
     // Thêm bài đăng mới vào PostController
     Provider.of<PostController>(context, listen: false).addPostAtTop(newPost);
 
