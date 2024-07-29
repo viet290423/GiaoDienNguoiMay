@@ -17,11 +17,13 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   int friendCount = 0;
+  String username = '';
 
   @override
   void initState() {
     super.initState();
     _loadFriendCount();
+    _loadUsername();
   }
 
   Future<void> _loadFriendCount() async {
@@ -40,6 +42,13 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
+  Future<void> _loadUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString('username') ?? 'Username';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,9 +65,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     radius: 45,
                     backgroundImage: AssetImage('assets/images/flowers.png'),
                   ),
-                  const Text(
-                    'labubu',
-                    style: TextStyle(
+                  Text(
+                    username,
+                    style: const TextStyle(
                       color: Colors.black,
                       fontSize: 30,
                       fontWeight: FontWeight.bold,

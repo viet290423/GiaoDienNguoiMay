@@ -3,6 +3,7 @@ import 'package:demo/screen/auth/forgot_password_screen.dart';
 import 'package:demo/screen/auth/signup_screen.dart';
 import 'package:demo/screen/home/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,6 +16,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? phoneNumber;
   String? password;
+
+  Future<void> saveUsername(String username) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('username', username);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,8 +189,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           const SizedBox(height: 25),
                           ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
+                                await saveUsername(phoneNumber!);
                                 // Handle sign in
                                 Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
