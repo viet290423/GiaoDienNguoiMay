@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.black, // Set text color to black
                             ),
                             decoration: InputDecoration(
-                              labelText: 'Phone number',
+                              labelText: 'Username',
                               labelStyle: const TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w500,
@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please input your phone number';
+                                return 'Please input your username';
                               }
                               return null;
                             },
