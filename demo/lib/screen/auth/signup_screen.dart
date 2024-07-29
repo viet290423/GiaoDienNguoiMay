@@ -1,6 +1,7 @@
 import 'package:demo/screen/auth/login_screen.dart';
 import 'package:demo/screen/home/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -11,7 +12,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? phoneNumber;
+  String? username;
   String? password;
   String? confirmPassword;
 
@@ -38,7 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          const SizedBox(height: 50), // Add some space at the top
+                          const SizedBox(height: 50),
                           const Text(
                             'Create Account',
                             textAlign: TextAlign.center,
@@ -94,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             onChanged: (value) {
                               setState(() {
-                                phoneNumber = value;
+                                username = value;
                               });
                             },
                             validator: (value) {
@@ -204,9 +205,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           const SizedBox(height: 35),
                           ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // Handle sign up
+                                // Lưu username vào SharedPreferences
+                                final prefs = await SharedPreferences.getInstance();
+                                await prefs.setString('username', username!);
+
+                                // Chuyển đến màn hình chính
                                 Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                       builder: (context) => MainScreen()),
@@ -300,26 +305,19 @@ class SocialMediaButton extends StatelessWidget {
   final String imagePath;
   final VoidCallback onTap;
 
-  const SocialMediaButton({required this.imagePath, required this.onTap});
+  const SocialMediaButton({
+    Key? key,
+    required this.imagePath,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        width: 60, // Adjust width as needed
-        height: 44, // Adjust height as needed
-        decoration: BoxDecoration(
-          color: const Color(0xFFEFEFEF),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Center(
-          child: Image.asset(
-            imagePath,
-            width: 24, // Adjust icon size as needed
-            height: 24, // Adjust icon size as needed
-          ),
-        ),
+      child: CircleAvatar(
+        radius: 25,
+        backgroundImage: AssetImage(imagePath),
       ),
     );
   }
