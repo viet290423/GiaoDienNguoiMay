@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   image: post.decodedImage != null
                       ? DecorationImage(
                           image: post.decodedImage!,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                         )
                       : DecorationImage(
                           image: AssetImage(post.image),
@@ -220,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            SizedBox(height: Dimensions.height45 + 5),
+            SizedBox(height: Dimensions.height30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

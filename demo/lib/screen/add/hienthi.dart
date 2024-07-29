@@ -176,7 +176,7 @@ class _HienThiState extends State<HienThi> {
                 decoration: ShapeDecoration(
                   image: DecorationImage(
                     image: post.decodedImage!,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),

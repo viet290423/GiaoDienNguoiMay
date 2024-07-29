@@ -287,7 +287,7 @@ Widget build(BuildContext context) {
                         image: widget.decodedImage != null
                             ? DecorationImage(
                                 image: widget.decodedImage!,
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                               )
                             : DecorationImage(
                                 image: AssetImage(widget.image),
