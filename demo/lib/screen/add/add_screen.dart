@@ -1,8 +1,8 @@
+import 'dart:async';
 import 'package:camera/camera.dart';
+import 'package:demo/controller/socket_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'dart:convert';
-import 'dart:io';
+import 'package:provider/provider.dart';
 import 'save_add_screen.dart';
 
 class AddScreen extends StatefulWidget {
@@ -13,7 +13,6 @@ class AddScreen extends StatefulWidget {
 class _AddScreenState extends State<AddScreen> {
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
-  IO.Socket? socket;
   late List<CameraDescription> cameras;
   bool isFrontCamera = true;
 
@@ -21,14 +20,6 @@ class _AddScreenState extends State<AddScreen> {
   void initState() {
     super.initState();
     _initializeCamera();
-    _initializeSocket();
-  }
-
-  void _initializeSocket() {
-    socket = IO.io('http://192.168.42.24:8080',
-        IO.OptionBuilder().setTransports(['websocket']).build());
-    socket?.onConnect((_) => print('Connected to Socket.IO server'));
-    socket?.onDisconnect((_) => print('Disconnected from Socket.IO server'));
   }
 
   Future<void> _initializeCamera() async {
@@ -45,6 +36,12 @@ class _AddScreenState extends State<AddScreen> {
       );
 
       _initializeControllerFuture = _controller!.initialize();
+      await _initializeControllerFuture;
+
+      if (mounted) {
+        setState(() {});
+      }
+
       setState(() {});
     } catch (e) {
       print('Error initializing camera: $e');
@@ -100,12 +97,13 @@ class _AddScreenState extends State<AddScreen> {
   @override
   void dispose() {
     _controller?.dispose();
-    socket?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final socketService = Provider.of<SocketService>(context);
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -143,10 +141,10 @@ class _AddScreenState extends State<AddScreen> {
                                 child: FittedBox(
                                   fit: BoxFit.cover,
                                   child: SizedBox(
-                                    width:
-                                        _controller!.value.previewSize!.width,
-                                    height:
-                                        _controller!.value.previewSize!.height,
+                                    width: _controller!
+                                        .value.previewSize!.width,
+                                    height: _controller!
+                                        .value.previewSize!.height,
                                     child: CameraPreview(_controller!),
                                   ),
                                 ),
@@ -195,7 +193,7 @@ class _AddScreenState extends State<AddScreen> {
                                 MaterialPageRoute(
                                   builder: (context) => SaveAddScreen(
                                     imagePath: image.path,
-                                    socket: socket,
+                                    socket: socketService.socket,
                                   ),
                                 ),
                               );

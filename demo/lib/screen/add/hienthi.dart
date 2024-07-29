@@ -17,6 +17,7 @@ class HienThi extends StatefulWidget {
 class _HienThiState extends State<HienThi> {
   late Timer _timer;
   final ValueNotifier<String> _elapsedTimeNotifier = ValueNotifier<String>('');
+  bool _isDisposed = false;
 
   @override
   void initState() {
@@ -27,12 +28,15 @@ class _HienThiState extends State<HienThi> {
 
   @override
   void dispose() {
+    _isDisposed = true;
     _timer.cancel();
     _elapsedTimeNotifier.dispose();
     super.dispose();
   }
 
   void _updateElapsedTime() {
+    if (_isDisposed) return;
+
     final now = DateTime.now();
     final postTime = DateTime.parse(widget.post.time);
     final difference = now.difference(postTime);

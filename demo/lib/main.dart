@@ -1,3 +1,4 @@
+import 'package:demo/controller/socket_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PostController()),
+        ChangeNotifierProvider(create: (_) => SocketService()),
       ],
       child: GetMaterialApp(
         useInheritedMediaQuery: true,
