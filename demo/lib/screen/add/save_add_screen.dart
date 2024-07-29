@@ -1,15 +1,14 @@
 import 'package:demo/app/dimensions.dart';
 import 'package:demo/controller/post_controller.dart';
 import 'package:demo/screen/add/hienthi.dart';
-import 'package:demo/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:intl/intl.dart';
 import 'package:demo/models/post_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SaveAddScreen extends StatefulWidget {
   final String imagePath;
@@ -22,9 +21,9 @@ class SaveAddScreen extends StatefulWidget {
 }
 
 class _SaveAddScreenState extends State<SaveAddScreen> {
-  String username = '';
   TextEditingController _captionController = TextEditingController();
   bool _isFileExist = false;
+  String _username = 'User Name';
 
   @override
   void initState() {
@@ -33,19 +32,20 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
     _loadUsername();
   }
 
-  Future<void> _loadUsername() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      username = prefs.getString('username') ?? 'Username';
-    });
-  }
-
   // Kiểm tra tệp có tồn tại hay không
   void _checkFileExist() async {
     final file = File(widget.imagePath);
     bool isExist = await file.exists();
     setState(() {
       _isFileExist = isExist;
+    });
+  }
+
+  // Lấy tên người dùng từ SharedPreferences
+  Future<void> _loadUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _username = prefs.getString('username') ?? 'User Name';
     });
   }
 
@@ -64,8 +64,8 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
 
     final newPost = Post(
       image: image,
-      avatar: 'assets/images/flowers.png', // Đường dẫn ảnh đại diện mặc định
-      name: username, // Thay thế bằng tên thực tế của người dùng
+      avatar: '', // Đường dẫn ảnh đại diện mặc định
+      name: _username, // Sử dụng tên người dùng thực tế
       time: DateFormat('yyyy-MM-dd HH:mm:ss').format(now),
       caption: caption,
       likes: 0,
@@ -77,8 +77,8 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
     widget.socket?.emit('save_image', {
       'image': image,
       'caption': caption,
-      'avatar': 'assets/images/flowers.png', // Đường dẫn ảnh đại diện mặc định
-      'name': username, // Thay thế bằng tên thực tế của người dùng
+      'avatar': '', // Đường dẫn ảnh đại diện mặc định
+      'name': _username, // Sử dụng tên người dùng thực tế
       'likes': 0,
       'comments': [],
       'isFavorite': false,
@@ -171,7 +171,7 @@ class _SaveAddScreenState extends State<SaveAddScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.black,
                 padding:
-                    const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
