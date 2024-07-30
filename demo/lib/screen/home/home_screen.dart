@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:demo/screen/add/add_screen.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   final int? startingIndex;
@@ -21,9 +22,39 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
+  bool isNewUser = false;
   String searchQuery = '';
   TextEditingController searchController = TextEditingController();
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkNewUser();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+    _fadeAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+    _controller.forward();
+  }
+
+  Future<void> _checkNewUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isNewUser = prefs.getBool('isNewUser') ?? false;
+    });
+    if (isNewUser) {
+      await prefs.setBool(
+          'isNewUser', false); // Reset cờ đăng ký sau khi kiểm tra
+    }
+  }
 
   List<Post> get filteredPosts {
     final posts = Provider.of<PostController>(context).posts;
@@ -35,6 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
               post.name.toLowerCase().contains(searchQuery.toLowerCase()))
           .toList();
     }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,17 +123,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: Consumer<PostController>(
                     builder: (context, postController, child) {
-                      return PageView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: filteredPosts.length,
-                        itemBuilder: (context, index) {
-                          final post = filteredPosts[index];
-                          return _buildPost(post, index);
-                        },
-                        controller: PageController(
-                          initialPage: widget.startingIndex ?? 0,
-                        ),
-                      );
+                      return isNewUser
+                          ? FadeTransition(
+                              opacity: _fadeAnimation,
+                              child: Center(
+                                child: Text(
+                                  'Welcome to FuzzySnap',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : PageView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: filteredPosts.length,
+                              itemBuilder: (context, index) {
+                                final post = filteredPosts[index];
+                                return _buildPost(post, index);
+                              },
+                              controller: PageController(
+                                initialPage: widget.startingIndex ?? 0,
+                              ),
+                            );
                     },
                   ),
                 ),
@@ -108,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildPost(Post post, int index) {
+  Widget _buildPost(Post post, int startingIndex) {
     return Container(
       margin: EdgeInsets.only(
           top: Dimensions.height30,
@@ -196,10 +246,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           image: post.decodedImage!,
                           fit: BoxFit.cover,
                         )
-                      : DecorationImage(
-                          image: AssetImage(post.image),
-                          fit: BoxFit.fill,
-                        ),
+                      : isNewUser
+                          ? null
+                          : DecorationImage(
+                              image: AssetImage(post.image),
+                              fit: BoxFit.fill,
+                            ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

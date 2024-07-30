@@ -13,6 +13,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? username;
+  String? phoneNumber;
   String? password;
   String? confirmPassword;
 
@@ -101,6 +102,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please input your username';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 25),
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Phone Number',
+                              labelStyle: const TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                              filled: true,
+                              fillColor: const Color(0xFFF2E7D5),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                borderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 18.0, horizontal: 18.0),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                phoneNumber = value;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please input your phone number';
                               }
                               return null;
                             },
@@ -207,15 +255,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // Lưu username vào SharedPreferences
-                                final prefs = await SharedPreferences.getInstance();
+                                final prefs =
+                                    await SharedPreferences.getInstance();
                                 await prefs.setString('username', username!);
+                                await prefs.setBool(
+                                    'isNewUser', true); // Lưu cờ đăng ký
 
-                                // Chuyển đến màn hình chính
                                 Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                       builder: (context) => MainScreen()),
-                                      (Route<dynamic> route) => false,
+                                  (Route<dynamic> route) => false,
                                 );
                               }
                             },
@@ -241,7 +290,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
                                       builder: (context) => LoginScreen()),
-                                      (Route<dynamic> route) => false,
+                                  (Route<dynamic> route) => false,
                                 );
                               },
                               child: const Text(
@@ -269,14 +318,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   // Handle Google sign in
                                 },
                               ),
-                              const SizedBox(width: 16), // Space between buttons
+                              const SizedBox(
+                                  width: 16), // Space between buttons
                               SocialMediaButton(
                                 imagePath: 'assets/images/facebook.png',
                                 onTap: () {
                                   // Handle Facebook sign in
                                 },
                               ),
-                              const SizedBox(width: 16), // Space between buttons
+                              const SizedBox(
+                                  width: 16), // Space between buttons
                               SocialMediaButton(
                                 imagePath: 'assets/images/apple.png',
                                 onTap: () {
@@ -286,7 +337,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ],
                           ),
                           const Spacer(), // Fill remaining space
-                          const SizedBox(height: 30), // Add some space at the bottom
+                          const SizedBox(
+                              height: 30), // Add some space at the bottom
                         ],
                       ),
                     ),
@@ -305,19 +357,26 @@ class SocialMediaButton extends StatelessWidget {
   final String imagePath;
   final VoidCallback onTap;
 
-  const SocialMediaButton({
-    Key? key,
-    required this.imagePath,
-    required this.onTap,
-  }) : super(key: key);
+  const SocialMediaButton({required this.imagePath, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: CircleAvatar(
-        radius: 25,
-        backgroundImage: AssetImage(imagePath),
+      child: Container(
+        width: 60, // Adjust width as needed
+        height: 44, // Adjust height as needed
+        decoration: BoxDecoration(
+          color: const Color(0xFFEFEFEF),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(
+          child: Image.asset(
+            imagePath,
+            width: 24, // Adjust icon size as needed
+            height: 24, // Adjust icon size as needed
+          ),
+        ),
       ),
     );
   }
