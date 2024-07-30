@@ -3,6 +3,8 @@ import 'package:demo/models/post_model.dart';
 import 'package:demo/screen/home/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../chat/chat_detail_screen.dart';
+
 
 class FriendAccount extends StatelessWidget {
   final String userName;
@@ -137,7 +139,17 @@ class FriendAccount extends StatelessWidget {
                               children: [
                                 Flexible(
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ChatDetailScreen(
+                                            userName: userName,
+                                            userImage: 'assets/images/labubu.webp', // Đường dẫn tới hình ảnh bạn muốn hiển thị cho người dùng này
+                                          ),
+                                        ),
+                                      );
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       foregroundColor: Colors.white,
                                       backgroundColor: Colors.black,
@@ -162,7 +174,9 @@ class FriendAccount extends StatelessWidget {
                                 const SizedBox(width: 10),
                                 Flexible(
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      // Xử lý sự kiện khi nhấn nút 'Unfriend'
+                                    },
                                     style: ElevatedButton.styleFrom(
                                       foregroundColor: Colors.black,
                                       backgroundColor: Colors.white,
@@ -240,7 +254,6 @@ class FriendAccount extends StatelessWidget {
                             ),
                           ],
                         ),
-                        //const SizedBox(height: 10), // Điều chỉnh chiều cao của SizedBox
                         Container(
                           decoration: const BoxDecoration(
                             color: Colors.transparent,
