@@ -83,7 +83,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         leading: CircleAvatar(
                           backgroundColor: Colors.grey,
                           radius: 20,
-                          backgroundImage: AssetImage('assets/images/chatbot_logo.png'), // Đường dẫn tới logo chatbot
+                          backgroundImage: AssetImage('assets/images/chatbot_logo.png'),
                         ),
                         title: Text(
                           'AI Chat',
@@ -134,7 +134,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 userImage: 'assets/images/flowers.png',
                               ),
                             ),
-                          ).then((value) {
+                          ).then((_) {
                             _loadLastMessages(); // Load last messages again when returning from chat screen
                           });
                         },
@@ -168,7 +168,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 userImage: 'assets/images/labubu5.webp',
                               ),
                             ),
-                          ).then((value) {
+                          ).then((_) {
                             _loadLastMessages(); // Load last messages again when returning from chat screen
                           });
                         },

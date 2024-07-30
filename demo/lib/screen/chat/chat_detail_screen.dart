@@ -15,42 +15,52 @@ class ChatDetailScreen extends StatefulWidget {
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
   final TextEditingController _controller = TextEditingController();
-  final List<Map<String, dynamic>> _messages = [
-    {"type": "received", "text": "Hi there!", "timestamp": DateTime.now().subtract(Duration(minutes: 60)).toIso8601String()},
-    {"type": "sent", "text": "Hello!", "timestamp": DateTime.now().subtract(Duration(minutes: 59)).toIso8601String()},
-    {"type": "received", "text": "What your name?", "timestamp": DateTime.now().subtract(Duration(minutes: 58)).toIso8601String()},
-  ];
+  List<Map<String, dynamic>> _messages = []; // Khởi tạo danh sách rỗng
 
   @override
   void initState() {
     super.initState();
-    _loadMessages();
+    _initializeMessages();
   }
 
-  Future<void> _loadMessages() async {
+  Future<void> _initializeMessages() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? messagesString = prefs.getString('messages_${widget.userName}');
+
     if (messagesString != null) {
+      // Nếu đã có tin nhắn từ SharedPreferences
       setState(() {
-        _messages.clear();
-        _messages.addAll(List<Map<String, dynamic>>.from(jsonDecode(messagesString)));
+        _messages = List<Map<String, dynamic>>.from(jsonDecode(messagesString));
+      });
+    } else {
+      // Nếu không có tin nhắn, sử dụng tin nhắn mẫu
+      setState(() {
+        _messages = [
+          {"type": "received", "text": "Hi there!", "timestamp": DateTime.now().subtract(Duration(minutes: 60)).toIso8601String()},
+          {"type": "sent", "text": "Hello!", "timestamp": DateTime.now().subtract(Duration(minutes: 59)).toIso8601String()},
+          {"type": "received", "text": "What your name?", "timestamp": DateTime.now().subtract(Duration(minutes: 58)).toIso8601String()},
+        ];
       });
     }
   }
 
   Future<void> _saveMessages() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('messages_${widget.userName}', jsonEncode(_messages));
+    await prefs.setString('messages_${widget.userName}', jsonEncode(_messages));
   }
 
-  void _sendMessage() {
+  void _sendMessage() async {
     if (_controller.text.isNotEmpty) {
       final timestamp = DateTime.now();
       setState(() {
-        _messages.add({"type": "sent", "text": _controller.text, "timestamp": timestamp.toIso8601String()});
+        _messages.add({
+          "type": "sent",
+          "text": _controller.text,
+          "timestamp": timestamp.toIso8601String()
+        });
         _controller.clear();
       });
-      _saveMessages();
+      await _saveMessages(); // Sử dụng await để chắc chắn dữ liệu đã được lưu
     }
   }
 
@@ -96,9 +106,17 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 final message = _messages[index];
-                final showTime = index == 0 || (index > 0 && DateTime.parse(_messages[index - 1]['timestamp']).difference(DateTime.parse(message['timestamp'])).inMinutes.abs() > 1);
+                final showTime = index == 0 ||
+                    (index > 0 &&
+                        DateTime.parse(_messages[index - 1]['timestamp'])
+                            .difference(DateTime.parse(message['timestamp']))
+                            .inMinutes
+                            .abs() >
+                            1);
                 return Column(
-                  crossAxisAlignment: message['type'] == 'received' ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+                  crossAxisAlignment: message['type'] == 'received'
+                      ? CrossAxisAlignment.start
+                      : CrossAxisAlignment.end,
                   children: [
                     if (showTime)
                       Padding(
@@ -108,7 +126,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                           style: TextStyle(color: Colors.grey, fontSize: 12),
                         ),
                       ),
-                    message['type'] == 'received' ? buildReceivedMessage(message['text']) : buildSentMessage(message['text']),
+                    message['type'] == 'received'
+                        ? buildReceivedMessage(message['text'])
+                        : buildSentMessage(message['text']),
                   ],
                 );
               },
@@ -124,7 +144,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     child: TextField(
                       controller: _controller,
                       decoration: InputDecoration(
-                        hintText: 'Texting',
+                        hintText: 'Type a message...',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15), // Giảm kích thước border
                           borderSide: BorderSide.none,

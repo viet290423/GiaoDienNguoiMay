@@ -38,7 +38,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               height: 370,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/welcome.png"),
+                  image: AssetImage("assets/images/bacham.gif"),
                   fit: BoxFit.fill,
                 ),
               ),
