@@ -139,7 +139,7 @@ void verifyUserKey(BuildContext context, Function onSuccess) {
     showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Nhập Intimate Key <3'),
+        title: Text('Add Intimate Key <3'),
         content: TextField(
           controller: keyController,
           decoration: InputDecoration(hintText: 'Key'),
@@ -149,7 +149,7 @@ void verifyUserKey(BuildContext context, Function onSuccess) {
             onPressed: () {
               Navigator.pop(context, keyController.text);
             },
-            child: Text('Xác nhận'),
+            child: Text('Confirm'),
           ),
         ],
       ),
@@ -384,7 +384,7 @@ Widget build(BuildContext context) {
                 child: TextField(
                   controller: commentController,
                   decoration: InputDecoration(
-                    hintText: 'Nhập comment của bạn',
+                    hintText: 'Comment...',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: const BorderSide(
