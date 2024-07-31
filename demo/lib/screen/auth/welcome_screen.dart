@@ -32,19 +32,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: Center(
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
             Container(
               width: 363,
               height: 370,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/bacham.gif"),
+                  image: AssetImage("assets/images/welcome.png"),
                   fit: BoxFit.fill,
                 ),
               ),
             ),
             SizedBox(height: Dimensions.height30,),
-            Text(
+            const Text(
               'FuzzySnap',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -55,7 +55,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 height: 0,
               ),
             ),
-            Text(
+            const Text(
               'Kết nối những khoảnh khắc',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -66,7 +66,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 height: 0,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -80,9 +80,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ),
                   onPressed: () {
-                    navigateWithTransition(context, LoginScreen());
+                    navigateWithTransition(context, const LoginScreen());
                   },
-                  child: Text(
+                  child: const Text(
                     "Login",
                     style: TextStyle(
                       color: Colors.white,
@@ -102,9 +102,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ),
                   onPressed: () {
-                    navigateWithTransition(context, SignUpScreen());
+                    navigateWithTransition(context, const SignUpScreen());
                   },
-                  child: Text(
+                  child: const Text(
                     "Register",
                     style: TextStyle(
                       color: Colors.black,
@@ -116,7 +116,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

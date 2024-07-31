@@ -2,6 +2,7 @@ import 'package:demo/screen/auth/login_screen.dart';
 import 'package:demo/screen/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/setting_widget.dart';
+import '../auth/welcome_screen.dart';
 import 'account_screen.dart';
 import 'change_password_screen.dart';
 import 'information_screen.dart';
@@ -20,6 +21,7 @@ class _SettingScreenState extends State<SettingScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(249, 255, 255, 255),
       appBar: AppBar(
+        forceMaterialTransparency: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -62,7 +64,8 @@ class _SettingScreenState extends State<SettingScreen> {
               children: [
                 buildSettingItem(
                   'Language',
-                  trailing: const Text('English', style: TextStyle(color: Colors.black)),
+                  trailing: const Text('English',
+                      style: TextStyle(color: Colors.black)),
                   onTap: () {},
                 ),
                 buildSettingItem(
@@ -140,7 +143,10 @@ class _SettingScreenState extends State<SettingScreen> {
           title: const Center(
             child: Text(
               'Do you really want to delete your account?',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
               textAlign: TextAlign.center,
             ),
           ),
@@ -166,7 +172,11 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      // Handle account deletion
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => SplashScreen()),
+                        (Route<dynamic> route) => false,
+                      );
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.red,

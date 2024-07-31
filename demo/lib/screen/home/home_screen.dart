@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:demo/app/dimensions.dart';
 import 'package:demo/controller/post_controller.dart';
 import 'package:demo/models/post_model.dart';
-import 'package:demo/screen/friends/friend_account.dart';
 import 'package:demo/screen/home/comment_screen.dart';
 import 'package:demo/widgets/post_time_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +12,8 @@ import 'package:demo/screen/add/add_screen.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../friends/friend_account.dart';
 
 class HomeScreen extends StatefulWidget {
   final int? startingIndex;
@@ -35,12 +36,12 @@ class _HomeScreenState extends State<HomeScreen>
     super.initState();
     _checkNewUser();
     _controller = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       vsync: this,
-    );
+    )..forward();
     _fadeAnimation = CurvedAnimation(
       parent: _controller,
-      curve: Curves.easeIn,
+      curve: Curves.linear,
     );
     _controller.forward();
   }
@@ -78,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         centerTitle: false,
         backgroundColor: Colors.white,
         title: const Padding(
@@ -94,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen>
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 30),
+            padding: const EdgeInsets.only(right: 30),
             child: IconButton(
                 onPressed: () {
                   showSearch(
@@ -104,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   listen: false)
                               .posts));
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.search,
                   size: 30,
                   color: Colors.black,
@@ -116,25 +118,35 @@ class _HomeScreenState extends State<HomeScreen>
       body: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(left: 10, right: 10),
+            margin: const EdgeInsets.only(left: 10, right: 10),
             child: Column(
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Expanded(
                   child: Consumer<PostController>(
                     builder: (context, postController, child) {
                       return isNewUser
-                          ? FadeTransition(
-                              opacity: _fadeAnimation,
-                              child: Center(
-                                child: Text(
-                                  'Welcome to FuzzySnap',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Center(
+                                    child: Image.asset(
+                                  "assets/images/fly.gif",
+                                  width: Dimensions.spalshImg * 2,
+                                )),
+                                FadeTransition(
+                                  opacity: _fadeAnimation,
+                                  child: const Center(
+                                    child: Text(
+                                      'Welcome to FuzzySnap',
+                                      style: TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             )
                           : PageView.builder(
                               scrollDirection: Axis.vertical,
@@ -379,7 +391,7 @@ class CustomSearch extends SearchDelegate {
   List<Widget>? buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () {
           query = '';
         },
@@ -390,7 +402,7 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
         close(context, null);
       },
