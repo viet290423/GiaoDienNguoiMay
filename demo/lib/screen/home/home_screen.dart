@@ -406,29 +406,33 @@ class CustomSearch extends SearchDelegate {
         .where((post) => post.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
-    return ListView.builder(
-      itemCount: filteredPosts.length,
-      itemBuilder: (context, index) {
-        final post = filteredPosts[index];
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: AssetImage(post.avatar),
-          ),
-          title: Text(post.name),
-          onTap: () {
-            // Khi bấm vào tên của người đăng, hiển thị các bài đăng của họ
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FriendAccount(
-                  userName: post.name,
-                  posts: posts,
+    return Container(
+      color: Colors.white, // Set the background color to white
+      child: ListView.builder(
+        itemCount: filteredPosts.length,
+        itemBuilder: (context, index) {
+          final post = filteredPosts[index];
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage: AssetImage(post.avatar),
+            ),
+            title: Text(post.name),
+            onTap: () {
+              // Khi bấm vào tên của người đăng, hiển thị các bài đăng của họ
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      FriendAccount(
+                        userName: post.name,
+                        posts: posts,
+                      ),
                 ),
-              ),
-            );
-          },
-        );
-      },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -438,28 +442,32 @@ class CustomSearch extends SearchDelegate {
         .where((post) => post.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
-    return ListView.builder(
-      itemCount: filteredPosts.length,
-      itemBuilder: (context, index) {
-        final post = filteredPosts[index];
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: AssetImage(post.avatar),
-          ),
-          title: Text(post.name),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FriendAccount(
-                  userName: post.name,
-                  posts: posts,
+    return Container(
+      color: Colors.white, // Set the background color to white
+      child: ListView.builder(
+        itemCount: filteredPosts.length,
+        itemBuilder: (context, index) {
+          final post = filteredPosts[index];
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage: AssetImage(post.avatar),
+            ),
+            title: Text(post.name),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      FriendAccount(
+                        userName: post.name,
+                        posts: posts,
+                      ),
                 ),
-              ),
-            );
-          },
-        );
-      },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:demo/screen/auth/login_screen.dart';
 import 'package:demo/screen/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/setting_widget.dart';
+import '../auth/welcome_screen.dart';
 import 'account_screen.dart';
 import 'change_password_screen.dart';
 import 'information_screen.dart';
@@ -20,6 +21,7 @@ class _SettingScreenState extends State<SettingScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(249, 255, 255, 255),
       appBar: AppBar(
+        forceMaterialTransparency: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -166,7 +168,11 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   TextButton(
                     onPressed: () {
-                      // Handle account deletion
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                            (Route<dynamic> route) => false,
+                      );
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: Colors.red,
