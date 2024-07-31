@@ -78,6 +78,9 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
+
+        elevation:0,
         centerTitle: false,
         backgroundColor: Colors.white,
         title: const Padding(
