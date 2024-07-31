@@ -115,6 +115,7 @@ class _FriendsPageState extends State<FriendsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         title: Text(
           'Friends',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),

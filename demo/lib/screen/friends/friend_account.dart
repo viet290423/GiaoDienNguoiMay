@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../chat/chat_detail_screen.dart';
 
-
 class FriendAccount extends StatelessWidget {
   final String userName;
   final List<Post> posts;
@@ -15,7 +14,7 @@ class FriendAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Post> userPosts =
-    posts.where((post) => post.name == userName).toList();
+        posts.where((post) => post.name == userName).toList();
 
     final List<String> imagePaths = [
       'assets/images/labubu.webp',
@@ -63,7 +62,7 @@ class FriendAccount extends StatelessWidget {
                             Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => MainScreen()),
-                                  (Route<dynamic> route) => false,
+                              (Route<dynamic> route) => false,
                             );
                           },
                         ),
@@ -115,22 +114,23 @@ class FriendAccount extends StatelessWidget {
                       padding: const EdgeInsets.all(16.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 userName,
                                 style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 4),
-                              const Text(
-                                'Description',
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.grey),
-                              ),
+                              // const SizedBox(height: 4),
+                              // const Text(
+                              //   'Description',
+                              //   style:
+                              //       TextStyle(fontSize: 16, color: Colors.grey),
+                              // ),
                             ],
                           ),
                           Expanded(
@@ -143,9 +143,11 @@ class FriendAccount extends StatelessWidget {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => ChatDetailScreen(
+                                          builder: (context) =>
+                                              ChatDetailScreen(
                                             userName: userName,
-                                            userImage: 'assets/images/labubu.webp', // Đường dẫn tới hình ảnh bạn muốn hiển thị cho người dùng này
+                                            userImage:
+                                                'assets/images/labubu.webp', // Đường dẫn tới hình ảnh bạn muốn hiển thị cho người dùng này
                                           ),
                                         ),
                                       );
@@ -159,7 +161,7 @@ class FriendAccount extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16, vertical: 10),
                                     ),
-                                    child: FittedBox(
+                                    child:const FittedBox(
                                       fit: BoxFit.scaleDown,
                                       child: Row(
                                         children: const [
@@ -186,11 +188,12 @@ class FriendAccount extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16, vertical: 10),
                                     ),
-                                    child: FittedBox(
+                                    child: const FittedBox(
                                       fit: BoxFit.scaleDown,
                                       child: Row(
                                         children: const [
-                                          Icon(Icons.person_remove, color: Colors.black),
+                                          Icon(Icons.person_remove,
+                                              color: Colors.black),
                                           SizedBox(width: 5),
                                           Text('Unfriend'),
                                         ],
@@ -215,7 +218,9 @@ class FriendAccount extends StatelessWidget {
                           children: [
                             Column(
                               children: [
-                                Text('Like', style: TextStyle(fontSize: 20, color: Colors.black)),
+                                Text('Like',
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black)),
                                 Text(
                                   '90',
                                   style: TextStyle(
@@ -228,7 +233,9 @@ class FriendAccount extends StatelessWidget {
                             ),
                             Column(
                               children: [
-                                Text('Post', style: TextStyle(fontSize: 20, color: Colors.black)),
+                                Text('Post',
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black)),
                                 Text(
                                   '3',
                                   style: TextStyle(
@@ -241,7 +248,9 @@ class FriendAccount extends StatelessWidget {
                             ),
                             Column(
                               children: [
-                                Text('Friends', style: TextStyle(fontSize: 20, color: Colors.black)),
+                                Text('Friends',
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black)),
                                 Text(
                                   '6',
                                   style: TextStyle(
@@ -261,12 +270,13 @@ class FriendAccount extends StatelessWidget {
                               top: Radius.circular(20),
                             ),
                           ),
-                          padding: const EdgeInsets.all(2.0),
+                          padding: EdgeInsets.only(left: 2.0, right: 2.0),
                           child: GridView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: imagePaths.length,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
                               mainAxisSpacing: 4,
                               crossAxisSpacing: 4,

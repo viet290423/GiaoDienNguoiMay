@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:demo/app/dimensions.dart';
 import 'package:demo/controller/post_controller.dart';
 import 'package:demo/models/post_model.dart';
-import 'package:demo/screen/account/friend_account.dart';
+import 'package:demo/screen/friends/friend_account.dart';
 import 'package:demo/screen/home/comment_screen.dart';
 import 'package:demo/widgets/post_time_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -435,28 +435,31 @@ class CustomSearch extends SearchDelegate {
         .where((post) => post.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
-    return ListView.builder(
-      itemCount: filteredPosts.length,
-      itemBuilder: (context, index) {
-        final post = filteredPosts[index];
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: AssetImage(post.avatar),
-          ),
-          title: Text(post.name),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FriendAccount(
-                  userName: post.name,
-                  posts: posts,
+    return Container(
+      color: Colors.white,
+      child: ListView.builder(
+        itemCount: filteredPosts.length,
+        itemBuilder: (context, index) {
+          final post = filteredPosts[index];
+          return ListTile(
+            leading: CircleAvatar(
+              backgroundImage: AssetImage(post.avatar),
+            ),
+            title: Text(post.name),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FriendAccount(
+                    userName: post.name,
+                    posts: posts,
+                  ),
                 ),
-              ),
-            );
-          },
-        );
-      },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

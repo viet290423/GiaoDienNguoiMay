@@ -14,31 +14,28 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: false,
-        title: Padding(
-          padding: EdgeInsets.only(left: Dimensions.width30),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                icon,
-                size: Dimensions.iconSize24,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              icon,
+              size: Dimensions.iconSize24,
+              color: Colors.black,
+            ),
+            SizedBox(
+              width: Dimensions.width10,
+            ),
+            Text(
+              title,
+              style: TextStyle(
                 color: Colors.black,
+                fontSize: Dimensions.font20,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w800,
               ),
-              SizedBox(
-                width: Dimensions.width10,
-              ),
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: Dimensions.font20,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w800,
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

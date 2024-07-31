@@ -410,7 +410,7 @@ Widget build(BuildContext context) {
                 icon: Icon(Icons.send),
                 onPressed: () {
                   if (commentController.text.isNotEmpty) {
-                    addComment('User', commentController.text);
+                    addComment(widget.userName, commentController.text);
                     commentController.clear();
                   }
                 },
